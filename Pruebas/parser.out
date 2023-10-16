@@ -1,0 +1,126 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> declaration
+Rule 1     declaration -> INT ID EQUALS INT
+Rule 2     declaration -> FLOAT ID EQUALS FLOAT
+Rule 3     declaration -> STR ID EQUALS STR
+
+Terminals, with rules where they appear
+
+EQUALS               : 1 2 3
+FLOAT                : 2 2
+ID                   : 1 2 3
+INT                  : 1 1
+STR                  : 3 3
+error                : 
+
+Nonterminals, with rules where they appear
+
+declaration          : 0
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . declaration
+    (1) declaration -> . INT ID EQUALS INT
+    (2) declaration -> . FLOAT ID EQUALS FLOAT
+    (3) declaration -> . STR ID EQUALS STR
+
+    INT             shift and go to state 2
+    FLOAT           shift and go to state 3
+    STR             shift and go to state 4
+
+    declaration                    shift and go to state 1
+
+state 1
+
+    (0) S' -> declaration .
+
+
+
+state 2
+
+    (1) declaration -> INT . ID EQUALS INT
+
+    ID              shift and go to state 5
+
+
+state 3
+
+    (2) declaration -> FLOAT . ID EQUALS FLOAT
+
+    ID              shift and go to state 6
+
+
+state 4
+
+    (3) declaration -> STR . ID EQUALS STR
+
+    ID              shift and go to state 7
+
+
+state 5
+
+    (1) declaration -> INT ID . EQUALS INT
+
+    EQUALS          shift and go to state 8
+
+
+state 6
+
+    (2) declaration -> FLOAT ID . EQUALS FLOAT
+
+    EQUALS          shift and go to state 9
+
+
+state 7
+
+    (3) declaration -> STR ID . EQUALS STR
+
+    EQUALS          shift and go to state 10
+
+
+state 8
+
+    (1) declaration -> INT ID EQUALS . INT
+
+    INT             shift and go to state 11
+
+
+state 9
+
+    (2) declaration -> FLOAT ID EQUALS . FLOAT
+
+    FLOAT           shift and go to state 12
+
+
+state 10
+
+    (3) declaration -> STR ID EQUALS . STR
+
+    STR             shift and go to state 13
+
+
+state 11
+
+    (1) declaration -> INT ID EQUALS INT .
+
+    $end            reduce using rule 1 (declaration -> INT ID EQUALS INT .)
+
+
+state 12
+
+    (2) declaration -> FLOAT ID EQUALS FLOAT .
+
+    $end            reduce using rule 2 (declaration -> FLOAT ID EQUALS FLOAT .)
+
+
+state 13
+
+    (3) declaration -> STR ID EQUALS STR .
+
+    $end            reduce using rule 3 (declaration -> STR ID EQUALS STR .)
+

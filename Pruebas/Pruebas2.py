@@ -1,5 +1,22 @@
 import re
 
+# PLANTILLAS
+v1 = 1
+v2 = 2
+# MOVER
+mov = f"mov {v1} {v2}\n"
+# OPERACIONES ARITMETICAS
+add = f"add {v1} {v2}\n"
+sub = f"sub {v1} {v2}\n"
+mul = f"mul {v1} {v2}\n"
+div = f"div {v1} {v2}\n"
+# GUARDAR
+sto = f"sto {v1} {v2}\n"
+# SALTOS
+
+# SECCIONES
+secdata= "section.data" + "\n"
+
 # TIPOS DE DECLARACIONES Y INSTRUCCIONES
 entero = r'\b(\w+)\s+(\w+)\s*=\s*(-?\d+)\b'
 cadena = r'\b(\w+)\s+(\w+)\s*=\s*\'([^\']*)\'|\"([^\"]*)\"'
@@ -24,8 +41,8 @@ fin
 lines = programa.split('\n')
 # ENSAMBLADOR ES EL STRING QUE GENERAMOS
 ensamblador = ""
-texto = "section.data"
-ensamblador += texto + "\n"
+# POR EJEMPLO AQUI CONCATENAMOS LA LINEA DEL SECTION DATA
+ensamblador += "section.data" + "\n"
 # genera la section.data y se genera lineas de codigo
 for line in lines:
     # se encontro una variable int
@@ -35,8 +52,7 @@ for line in lines:
         var_id = match.group(2)
         var_value = int(match.group(3))
         variable_dict = {"TYPE": var_type, "ID": var_id, "VALOR": var_value}
-        i = f"{variable_dict['ID']} dw {variable_dict['VALOR']}   ;"
-        ensamblador += i + "\n"
+        ensamblador += f"{variable_dict['ID']} dw {variable_dict['VALOR']}   ;" + "\n"
         symbol_table.append(variable_dict)
         lineasdecodigo.append(("entero", line))
     # se encontro una expresion
@@ -57,7 +73,7 @@ for line in lines:
     # se encontro la instruccion imprimir
     elif re.match(imprimir, line):
         texto = "mensaje "
-        ensamblador += texto
+        ensamblador += add
         texto = "db "
         ensamblador += texto
         cont = str(contador)
@@ -68,7 +84,7 @@ for line in lines:
         lineasdecodigo.append(("imprimir", line))
 # imprimimos cada linea encontrada
 for pattern, match in lineasdecodigo:
-    print(f"Pattern: {pattern}, Match: {match}")
+    print(f"linea: {pattern}, Match: {match}")
 # imprimimos la tabla de simbolos
 for variable_dict in symbol_table:
     print(variable_dict)
@@ -89,7 +105,7 @@ for line in lines:
     # solo para evitar errores
     if re.match(entero, line):
         print()
-    # lo que se imprime para imprimir el titulo
+    # impresion
     elif re.match(imprimir, line):
         ensamblador += ";imprimir un mensaje" + "\n"
         ensamblador += "mov eax, 4; syscall: write" + "\n"

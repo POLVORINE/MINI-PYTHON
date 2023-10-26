@@ -3,7 +3,6 @@ from tkinter import filedialog
 import ply.lex as lex
 import ply.yacc as yacc
 import customtkinter as ctk
-import re
 
 # Lista de palabras reservadas
 reserved = {
@@ -167,58 +166,17 @@ def botonparser():
 
 
 def botonsemantico():
-    global symbol_table
-    semantico.delete("1.0", "end")
-    symbol_table.clear()
-    progejemplo = codigofuente.get("1.0", "end-1c")
-    patrondeclaraciones = r'\b(\w+)\s+(\w+)\s*=\s*([\'"]?[\w.]+[\'"]?)'
-    patronexpresiones = r'\b(\w+)\s+(\w+)\s*=\s*([0-9]+|[\w.+\-*/]+)'
-    variable_declarations = re.findall(patrondeclaraciones, progejemplo)
-    variable_expresion = re.findall(patronexpresiones, progejemplo)
-    for declaration in variable_declarations:
-        TYPE, ID, VALOR = declaration
-        a = {"TYPE": TYPE, "ID": ID, "VALOR": VALOR}
-        symbol_table.append(a)
-    for declaration in variable_expresion:
-        TYPE, ID, EXPRESION = declaration
-        a = {"TYPE": TYPE, "ID": ID, "EXPRESION": EXPRESION}
-        symbol_table.append(a)
-
-    imprimir = '\n'.join([str(a) for a in symbol_table])
-    semantico.insert('1.0', imprimir)
+    print("Botonse")
 
 
-def botontraducir():
+def botonIntermedio():
     botonsemantico()
-    global symbol_table
-    intermedio.delete("1.0", "end")
-    ensamblador = ""
-    line1 = "section.data"
-    ensamblador += line1 + "\n"
-    for a in symbol_table:
-        if a["TYPE"] == 'int':
-            i = f"{a['ID']} dw {a['VALOR']}   ;"
-            ensamblador += i + "\n"
-        if a["TYPE"] == 'float':
-            f = f"{a['ID']} dd {a['VALOR']}   ;"
-            ensamblador += f + "\n"
-        if a["TYPE"] == 'string':
-            s = f"{a['ID']} db {a['VALOR']}  ;"
-            ensamblador += s + "\n"
-    line1 = "section.text"
-    ensamblador += line1 + "\n"
-    line1 = "global main "
-    ensamblador += line1 + "\n"
-    line1 = "main"
-    ensamblador += line1 + "\n"
-
-    intermedio.insert('1.0', ensamblador)
 
 
 def botonrun():
     botonscanner()
     botonparser()
-    botontraducir()
+    botonIntermedio()
 
 
 def botonsalir():
@@ -253,7 +211,8 @@ def botonsavefile():
 # DE AQUI PARA ABAJO ES GRAFICACION
 # personalizacion
 #   TAMAÑO Y TIPO DE FUENTE DE LA APLICACION
-fuente = ("Helvetica", 16)
+fuente = ("Helvetica", 24)
+fuenteG = ("Helvetica", 32)
 radio = 10
 grosor = 10
 nomcomp = "COM PILER"
@@ -304,14 +263,14 @@ boton_run.grid_propagate(False)
 boton_scanner = ctk.CTkButton(ventana, fg_color=color_gris2, text='scanner', command=botonscanner)
 boton_scanner.grid(row=0, column=5, sticky='nsew')
 boton_scanner.grid_propagate(False)
-boton_codinter = ctk.CTkButton(ventana, fg_color=color_gris, text='traducir', command=botontraducir)
+boton_codinter = ctk.CTkButton(ventana, fg_color=color_gris, text='traducir a ensamblador', command=botonIntermedio)
 boton_codinter.grid(row=0, column=6, sticky='nsew')
 boton_codinter.grid_propagate(False)
 ################################################################
-boton_semantico = ctk.CTkButton(ventana, fg_color=color_morado, text='tabla de simbolos', command=botonsemantico)
+boton_semantico = ctk.CTkButton(ventana, fg_color=color_morado, text='errores semanticos', command=botonsemantico)
 boton_semantico.grid(row=3, column=1, sticky='nsew')
 boton_semantico.grid_propagate(False)
-boton_parser = ctk.CTkButton(ventana, fg_color=color_rojo, text='parser', command=botonparser)
+boton_parser = ctk.CTkButton(ventana, fg_color=color_rojo, text='errores sintacticos', command=botonparser)
 boton_parser.grid(row=3, column=4, sticky='nsew')
 boton_parser.grid_propagate(False)
 ################################################################

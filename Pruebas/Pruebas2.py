@@ -1,5 +1,4 @@
 import re
-
 # PLANTILLAS
 v1 = 1
 v2 = 2
@@ -42,7 +41,7 @@ programa = """
 inicio prueba
 int x=50
 int y=100
-int suma = x+y
+int suma = x+y+5
 print ('Suma de dos numeros')
 print (suma)
 fin
@@ -116,9 +115,78 @@ for line in lines:
         ensamblador += ";imprimir un mensaje" + "\n"
     # analisis y impresion de  expresiones
     elif re.match(expresion, line):
-
         ensamblador += ";analizar una expresion" + "\n"
+        match = re.match(expresion, line)
+        if match:
+            nombre_variable = match.group(1)
+            expresion_completa = match.group(3)
+            operadores_encontrados = operadores.findall(expresion_completa)
+            operandos_encontrados = operandos.findall(expresion_completa)
+            print(f"Operadores encontrados: {operadores_encontrados}")
+            print(f"Operandos encontrados: {operandos_encontrados}")
+        for op in operadores_encontrados:
+            if op == '+':
+                t1 = operandos_encontrados[-1] + operandos_encontrados[-2]
+                v1 = 'ax'
+                v2 = operandos_encontrados.pop(-2)
+                mov = f"mov {v1} {v2}\n"
+                ensamblador += mov
+                v1 = 'ax'
+                v2 = operandos_encontrados.pop(-1)
+                add = f"add {v1} {v2}\n"
+                ensamblador += add
+                v1 = 't1'
+                v2 = 'ax'
+                mov = f"mov {v1} {v2}\n"
+                ensamblador += mov
+                operandos_encontrados.append(t1)
+            elif op == '-':
+                t1 = operandos_encontrados[-1] - operandos_encontrados[-2]
+                v1 = 'ax'
+                v2 = operandos_encontrados.pop(-2)
+                mov = f"mov {v1} {v2}\n"
+                ensamblador += mov
+                v1 = 'ax'
+                v2 = operandos_encontrados.pop(-1)
+                sub = f"sub {v1} {v2}\n"
+                ensamblador += sub
+                v1 = 't1'
+                v2 = 'ax'
+                mov = f"mov {v1} {v2}\n"
+                ensamblador += mov
+                operandos_encontrados.append(t1)
+            elif op == '*':
+                t1 = operandos_encontrados[-1] * operandos_encontrados[-2]
+                v1 = 'ax'
+                v2 = operandos_encontrados.pop(-2)
+                mov = f"mov {v1} {v2}\n"
+                ensamblador += mov
+                v1 = 'ax'
+                v2 = operandos_encontrados.pop(-1)
+                mul = f"mul {v1} {v2}\n"
+                ensamblador += mul
+                v1 = 't1'
+                v2 = 'ax'
+                mov = f"mov {v1} {v2}\n"
+                ensamblador += mov
+                operandos_encontrados.append(t1)
+            elif op == '/':
+                t1 = operandos_encontrados[-1] / operandos_encontrados[-2]
+                v1 = 'ax'
+                v2 = operandos_encontrados.pop(-2)
+                mov = f"mov {v1} {v2}\n"
+                ensamblador += mov
+                v1 = 'ax'
+                v2 = operandos_encontrados.pop(-1)
+                div = f"div {v1} {v2}\n"
+                ensamblador += div
+                v1 = 't1'
+                v2 = 'ax'
+                mov = f"mov {v1} {v2}\n"
+                ensamblador += mov
+                operandos_encontrados.append(t1)
+
     elif re.match(imprimirvariables, line):
-        ensamblador += ";imprimir un mensaje" + "\n"
+        ensamblador += ";imprimir una variable" + "\n"
 
 print(ensamblador)

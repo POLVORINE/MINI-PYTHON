@@ -1,45 +1,24 @@
-Operators = {'+', '-', '*', '/', '(', ')', '^'}  # collection of Operators
+import re
 
-Priority = {'+': 1, '-': 1, '*': 2, '/': 2, '^': 3}  # dictionary having priorities of Operators
+expresion = r'\b(\w+)\s+(\w+)\s*=\s*([\w.+\-*/]+)'
+operadores = re.compile(r'[+\-*/]')
+operandos = re.compile(r'\b(\w+|\d+)\b')
 
+expresion_texto = "5+5"
+match = re.search(expresion, expresion_texto)
 
-def infixToPostfix(expression):
-    stack = []  # initialization of empty stack
+if match:
+    nombre_variable = match.group(1)
+    expresion_completa = match.group(3)
 
-    output = ''
+    # Encuentra operadores en la expresión completa
+    operadores_encontrados = operadores.findall(expresion_completa)
 
-    for character in expression:
+    # Encuentra operandos en la expresión completa
+    operandos_encontrados = operandos.findall(expresion_completa)
 
-        if character not in Operators:  # if an operand append in postfix expression
-
-            output += character
-
-        elif character == '(':  # else Operators push onto stack
-
-            stack.append('(')
-
-        elif character == ')':
-
-            while stack and stack[-1] != '(':
-                output += stack.pop()
-
-            stack.pop()
-
-        else:
-
-            while stack and stack[-1] != '(' and Priority[character] <= Priority[stack[-1]]:
-                output += stack.pop()
-
-            stack.append(character)
-
-    while stack:
-        output += stack.pop()
-
-    return output
-
-
-expression = input('Enter infix expression ')
-
-print('infix notation: ', expression)
-
-print('postfix notation: ', infixToPostfix(expression))
+    print(f"Nombre de la variable: {nombre_variable}")
+    print(f"Operadores encontrados: {operadores_encontrados}")
+    print(f"Operandos encontrados: {operandos_encontrados}")
+else:
+    print("No se encontró una expresión válida.")

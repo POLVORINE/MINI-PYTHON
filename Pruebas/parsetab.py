@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'EQUALS FLOAT ID INT STR\n    declaration : INT ID EQUALS INT\n               | FLOAT ID EQUALS FLOAT\n               | STR ID EQUALS STR\n    '
+_lr_signature = 'APERTUPAR CADENA CIERREPAR FIN FLOAT ID IF IGUAL INICIO INT NUM OPARIT OPRELAC PRINT STRING WHILEPrograma : INICIO ID ListaInstrucciones FIN\n    ListaInstrucciones  : INSTRUCCION\n                        | ListaInstrucciones INSTRUCCION\n    \n    INSTRUCCION : ASIGNACION\n                | IFINSTR\n                | WHILEINSTR\n                | PRINTINSTR\n    \n    ASIGNACION : INT ID IGUAL EXPRESION\n                | STRING ID IGUAL CADENA\n                | FLOAT ID IGUAL EXPRESION\n    \n    EXPRESION   : NUM\n                | ID\n                | OPERACION\n    \n    OPERACION :  EXPRESION OPARIT EXPRESION\n    \n    IFINSTR : IF  CONDICION  INICIO ListaInstrucciones FIN\n    \n    CONDICION :  APERTUPAR EXPRESION OPRELAC EXPRESION CIERREPAR\n    \n    WHILEINSTR : WHILE CONDICION INICIO ListaInstrucciones FIN\n    \n    PRINTINSTR  : PRINT APERTUPAR CADENA CIERREPAR\n                | PRINT APERTUPAR EXPRESION   CIERREPAR\n    '
     
-_lr_action_items = {'INT':([0,8,],[2,11,]),'FLOAT':([0,9,],[3,12,]),'STR':([0,10,],[4,13,]),'$end':([1,11,12,13,],[0,-1,-2,-3,]),'ID':([2,3,4,],[5,6,7,]),'EQUALS':([5,6,7,],[8,9,10,]),}
+_lr_action_items = {'INICIO':([0,21,23,49,],[2,28,33,-16,]),'$end':([1,16,],[0,-1,]),'ID':([2,10,11,12,22,24,25,27,40,41,],[3,18,19,20,31,31,31,31,31,31,]),'INT':([3,4,5,6,7,8,9,17,28,30,31,32,33,36,37,38,39,42,43,44,45,47,48,],[10,10,-2,-4,-5,-6,-7,-3,10,-11,-12,-13,10,-8,-9,-10,10,10,-18,-19,-15,-14,-17,]),'STRING':([3,4,5,6,7,8,9,17,28,30,31,32,33,36,37,38,39,42,43,44,45,47,48,],[11,11,-2,-4,-5,-6,-7,-3,11,-11,-12,-13,11,-8,-9,-10,11,11,-18,-19,-15,-14,-17,]),'FLOAT':([3,4,5,6,7,8,9,17,28,30,31,32,33,36,37,38,39,42,43,44,45,47,48,],[12,12,-2,-4,-5,-6,-7,-3,12,-11,-12,-13,12,-8,-9,-10,12,12,-18,-19,-15,-14,-17,]),'IF':([3,4,5,6,7,8,9,17,28,30,31,32,33,36,37,38,39,42,43,44,45,47,48,],[13,13,-2,-4,-5,-6,-7,-3,13,-11,-12,-13,13,-8,-9,-10,13,13,-18,-19,-15,-14,-17,]),'WHILE':([3,4,5,6,7,8,9,17,28,30,31,32,33,36,37,38,39,42,43,44,45,47,48,],[14,14,-2,-4,-5,-6,-7,-3,14,-11,-12,-13,14,-8,-9,-10,14,14,-18,-19,-15,-14,-17,]),'PRINT':([3,4,5,6,7,8,9,17,28,30,31,32,33,36,37,38,39,42,43,44,45,47,48,],[15,15,-2,-4,-5,-6,-7,-3,15,-11,-12,-13,15,-8,-9,-10,15,15,-18,-19,-15,-14,-17,]),'FIN':([4,5,6,7,8,9,17,30,31,32,36,37,38,39,42,43,44,45,47,48,],[16,-2,-4,-5,-6,-7,-3,-11,-12,-13,-8,-9,-10,45,48,-18,-19,-15,-14,-17,]),'APERTUPAR':([13,14,15,],[22,22,24,]),'IGUAL':([18,19,20,],[25,26,27,]),'NUM':([22,24,25,27,40,41,],[30,30,30,30,30,30,]),'CADENA':([24,26,],[34,37,]),'OPRELAC':([29,30,31,32,47,],[40,-11,-12,-13,-14,]),'OPARIT':([29,30,31,32,35,36,38,46,47,],[41,-11,-12,-13,41,41,41,41,41,]),'CIERREPAR':([30,31,32,34,35,46,47,],[-11,-12,-13,43,44,49,-14,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'declaration':([0,],[1,]),}
+_lr_goto_items = {'Programa':([0,],[1,]),'ListaInstrucciones':([3,28,33,],[4,39,42,]),'INSTRUCCION':([3,4,28,33,39,42,],[5,17,5,5,17,17,]),'ASIGNACION':([3,4,28,33,39,42,],[6,6,6,6,6,6,]),'IFINSTR':([3,4,28,33,39,42,],[7,7,7,7,7,7,]),'WHILEINSTR':([3,4,28,33,39,42,],[8,8,8,8,8,8,]),'PRINTINSTR':([3,4,28,33,39,42,],[9,9,9,9,9,9,]),'CONDICION':([13,14,],[21,23,]),'EXPRESION':([22,24,25,27,40,41,],[29,35,36,38,46,47,]),'OPERACION':([22,24,25,27,40,41,],[32,32,32,32,32,32,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -26,8 +26,24 @@ for _k, _v in _lr_goto_items.items():
        _lr_goto[_x][_k] = _y
 del _lr_goto_items
 _lr_productions = [
-  ("S' -> declaration","S'",1,None,None,None),
-  ('declaration -> INT ID EQUALS INT','declaration',4,'p_declaration','Pruebas3.py',31),
-  ('declaration -> FLOAT ID EQUALS FLOAT','declaration',4,'p_declaration','Pruebas3.py',32),
-  ('declaration -> STR ID EQUALS STR','declaration',4,'p_declaration','Pruebas3.py',33),
+  ("S' -> Programa","S'",1,None,None,None),
+  ('Programa -> INICIO ID ListaInstrucciones FIN','Programa',4,'p_programa','Pruebas1.py',64),
+  ('ListaInstrucciones -> INSTRUCCION','ListaInstrucciones',1,'p_ListaInstrucciones','Pruebas1.py',70),
+  ('ListaInstrucciones -> ListaInstrucciones INSTRUCCION','ListaInstrucciones',2,'p_ListaInstrucciones','Pruebas1.py',71),
+  ('INSTRUCCION -> ASIGNACION','INSTRUCCION',1,'p_INSTRUCCION','Pruebas1.py',77),
+  ('INSTRUCCION -> IFINSTR','INSTRUCCION',1,'p_INSTRUCCION','Pruebas1.py',78),
+  ('INSTRUCCION -> WHILEINSTR','INSTRUCCION',1,'p_INSTRUCCION','Pruebas1.py',79),
+  ('INSTRUCCION -> PRINTINSTR','INSTRUCCION',1,'p_INSTRUCCION','Pruebas1.py',80),
+  ('ASIGNACION -> INT ID IGUAL EXPRESION','ASIGNACION',4,'p_ASIGNACION','Pruebas1.py',86),
+  ('ASIGNACION -> STRING ID IGUAL CADENA','ASIGNACION',4,'p_ASIGNACION','Pruebas1.py',87),
+  ('ASIGNACION -> FLOAT ID IGUAL EXPRESION','ASIGNACION',4,'p_ASIGNACION','Pruebas1.py',88),
+  ('EXPRESION -> NUM','EXPRESION',1,'p_EXPRESION','Pruebas1.py',94),
+  ('EXPRESION -> ID','EXPRESION',1,'p_EXPRESION','Pruebas1.py',95),
+  ('EXPRESION -> OPERACION','EXPRESION',1,'p_EXPRESION','Pruebas1.py',96),
+  ('OPERACION -> EXPRESION OPARIT EXPRESION','OPERACION',3,'p_OPERACION','Pruebas1.py',102),
+  ('IFINSTR -> IF CONDICION INICIO ListaInstrucciones FIN','IFINSTR',5,'p_IFINSTR','Pruebas1.py',108),
+  ('CONDICION -> APERTUPAR EXPRESION OPRELAC EXPRESION CIERREPAR','CONDICION',5,'p_CONDICION','Pruebas1.py',114),
+  ('WHILEINSTR -> WHILE CONDICION INICIO ListaInstrucciones FIN','WHILEINSTR',5,'p_WHILEINSTR','Pruebas1.py',120),
+  ('PRINTINSTR -> PRINT APERTUPAR CADENA CIERREPAR','PRINTINSTR',4,'p_PRINTINSTR','Pruebas1.py',126),
+  ('PRINTINSTR -> PRINT APERTUPAR EXPRESION CIERREPAR','PRINTINSTR',4,'p_PRINTINSTR','Pruebas1.py',127),
 ]

@@ -202,7 +202,7 @@ def botonIntermedio():
     contador = 1
     # genera la section.data y se genera lineas de codigo
     for line in lines:
-        # se encontro una variable int
+        # se encontro una DECLARACION  int
         if re.match(entero, line):
             match = re.match(entero, line)
             var_id = match.group(2)

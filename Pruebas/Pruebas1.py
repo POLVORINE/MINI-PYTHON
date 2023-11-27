@@ -10,7 +10,6 @@ reserved = {
     'inicio': 'INICIO',
     'fin': 'FIN',
     'if': 'IF',
-    'while': 'WHILE',
     'print': 'PRINT',
     'int': 'INT',
     'float': 'FLOAT',
@@ -76,7 +75,6 @@ def p_INSTRUCCION(p):
     """
     INSTRUCCION : ASIGNACION
                 | IFINSTR
-                | WHILEINSTR
                 | PRINTINSTR
     """
 
@@ -99,7 +97,12 @@ def p_EXPRESION(p):
 
 def p_OPERACION(p):
     """
-    OPERACION :  EXPRESION OPARIT EXPRESION
+    OPERACION :  ID OPARIT ID
+              | ID OPARIT   NUM
+              | NUM OPARIT   NUM
+              | NUM OPARIT   ID
+
+
     """
 
 
@@ -115,12 +118,6 @@ def p_CONDICION(p):
     """
 
 
-def p_WHILEINSTR(p):
-    """
-    WHILEINSTR : WHILE CONDICION INICIO ListaInstrucciones FIN
-    """
-
-
 def p_PRINTINSTR(p):
     """
     PRINTINSTR  : PRINT APERTUPAR CADENA CIERREPAR
@@ -133,7 +130,6 @@ def p_error(p):
     if p is not None:
         erroresSintacticos.insert("0.0", "Error de sintaxis en la entrada :" + token_str)
     else:
-        print('Error sintaxis por token no reconocido en la entrada :' + token_str)
         erroresSintacticos.insert("0.0", 'Error sintaxis por token no reconocido' + token_str)
 
 

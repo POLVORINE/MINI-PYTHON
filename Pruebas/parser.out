@@ -8,53 +8,52 @@ Rule 2     ListaInstrucciones -> INSTRUCCION
 Rule 3     ListaInstrucciones -> ListaInstrucciones INSTRUCCION
 Rule 4     INSTRUCCION -> ASIGNACION
 Rule 5     INSTRUCCION -> IFINSTR
-Rule 6     INSTRUCCION -> WHILEINSTR
-Rule 7     INSTRUCCION -> PRINTINSTR
-Rule 8     ASIGNACION -> INT ID IGUAL EXPRESION
-Rule 9     ASIGNACION -> STRING ID IGUAL CADENA
-Rule 10    ASIGNACION -> FLOAT ID IGUAL EXPRESION
-Rule 11    EXPRESION -> NUM
-Rule 12    EXPRESION -> ID
-Rule 13    EXPRESION -> OPERACION
-Rule 14    OPERACION -> EXPRESION OPARIT EXPRESION
-Rule 15    IFINSTR -> IF CONDICION INICIO ListaInstrucciones FIN
-Rule 16    CONDICION -> APERTUPAR EXPRESION OPRELAC EXPRESION CIERREPAR
-Rule 17    WHILEINSTR -> WHILE CONDICION INICIO ListaInstrucciones FIN
-Rule 18    PRINTINSTR -> PRINT APERTUPAR CADENA CIERREPAR
-Rule 19    PRINTINSTR -> PRINT APERTUPAR EXPRESION CIERREPAR
+Rule 6     INSTRUCCION -> PRINTINSTR
+Rule 7     ASIGNACION -> INT ID IGUAL EXPRESION
+Rule 8     ASIGNACION -> STRING ID IGUAL CADENA
+Rule 9     ASIGNACION -> FLOAT ID IGUAL EXPRESION
+Rule 10    EXPRESION -> NUM
+Rule 11    EXPRESION -> ID
+Rule 12    EXPRESION -> OPERACION
+Rule 13    OPERACION -> ID OPARIT ID
+Rule 14    OPERACION -> ID OPARIT NUM
+Rule 15    OPERACION -> NUM OPARIT NUM
+Rule 16    OPERACION -> NUM OPARIT ID
+Rule 17    IFINSTR -> IF CONDICION INICIO ListaInstrucciones FIN
+Rule 18    CONDICION -> APERTUPAR EXPRESION OPRELAC EXPRESION CIERREPAR
+Rule 19    PRINTINSTR -> PRINT APERTUPAR CADENA CIERREPAR
+Rule 20    PRINTINSTR -> PRINT APERTUPAR EXPRESION CIERREPAR
 
 Terminals, with rules where they appear
 
-APERTUPAR            : 16 18 19
-CADENA               : 9 18
-CIERREPAR            : 16 18 19
-FIN                  : 1 15 17
-FLOAT                : 10
-ID                   : 1 8 9 10 12
-IF                   : 15
-IGUAL                : 8 9 10
-INICIO               : 1 15 17
-INT                  : 8
-NUM                  : 11
-OPARIT               : 14
-OPRELAC              : 16
-PRINT                : 18 19
-STRING               : 9
-WHILE                : 17
+APERTUPAR            : 18 19 20
+CADENA               : 8 19
+CIERREPAR            : 18 19 20
+FIN                  : 1 17
+FLOAT                : 9
+ID                   : 1 7 8 9 11 13 13 14 16
+IF                   : 17
+IGUAL                : 7 8 9
+INICIO               : 1 17
+INT                  : 7
+NUM                  : 10 14 15 15 16
+OPARIT               : 13 14 15 16
+OPRELAC              : 18
+PRINT                : 19 20
+STRING               : 8
 error                : 
 
 Nonterminals, with rules where they appear
 
 ASIGNACION           : 4
-CONDICION            : 15 17
-EXPRESION            : 8 10 14 14 16 16 19
+CONDICION            : 17
+EXPRESION            : 7 9 18 18 20
 IFINSTR              : 5
 INSTRUCCION          : 2 3
-ListaInstrucciones   : 1 3 15 17
-OPERACION            : 13
-PRINTINSTR           : 7
+ListaInstrucciones   : 1 3 17
+OPERACION            : 12
+PRINTINSTR           : 6
 Programa             : 0
-WHILEINSTR           : 6
 
 Parsing method: LALR
 
@@ -87,29 +86,25 @@ state 3
     (3) ListaInstrucciones -> . ListaInstrucciones INSTRUCCION
     (4) INSTRUCCION -> . ASIGNACION
     (5) INSTRUCCION -> . IFINSTR
-    (6) INSTRUCCION -> . WHILEINSTR
-    (7) INSTRUCCION -> . PRINTINSTR
-    (8) ASIGNACION -> . INT ID IGUAL EXPRESION
-    (9) ASIGNACION -> . STRING ID IGUAL CADENA
-    (10) ASIGNACION -> . FLOAT ID IGUAL EXPRESION
-    (15) IFINSTR -> . IF CONDICION INICIO ListaInstrucciones FIN
-    (17) WHILEINSTR -> . WHILE CONDICION INICIO ListaInstrucciones FIN
-    (18) PRINTINSTR -> . PRINT APERTUPAR CADENA CIERREPAR
-    (19) PRINTINSTR -> . PRINT APERTUPAR EXPRESION CIERREPAR
+    (6) INSTRUCCION -> . PRINTINSTR
+    (7) ASIGNACION -> . INT ID IGUAL EXPRESION
+    (8) ASIGNACION -> . STRING ID IGUAL CADENA
+    (9) ASIGNACION -> . FLOAT ID IGUAL EXPRESION
+    (17) IFINSTR -> . IF CONDICION INICIO ListaInstrucciones FIN
+    (19) PRINTINSTR -> . PRINT APERTUPAR CADENA CIERREPAR
+    (20) PRINTINSTR -> . PRINT APERTUPAR EXPRESION CIERREPAR
 
-    INT             shift and go to state 10
-    STRING          shift and go to state 11
-    FLOAT           shift and go to state 12
-    IF              shift and go to state 13
-    WHILE           shift and go to state 14
-    PRINT           shift and go to state 15
+    INT             shift and go to state 9
+    STRING          shift and go to state 10
+    FLOAT           shift and go to state 11
+    IF              shift and go to state 12
+    PRINT           shift and go to state 13
 
     ListaInstrucciones             shift and go to state 4
     INSTRUCCION                    shift and go to state 5
     ASIGNACION                     shift and go to state 6
     IFINSTR                        shift and go to state 7
-    WHILEINSTR                     shift and go to state 8
-    PRINTINSTR                     shift and go to state 9
+    PRINTINSTR                     shift and go to state 8
 
 state 4
 
@@ -117,29 +112,25 @@ state 4
     (3) ListaInstrucciones -> ListaInstrucciones . INSTRUCCION
     (4) INSTRUCCION -> . ASIGNACION
     (5) INSTRUCCION -> . IFINSTR
-    (6) INSTRUCCION -> . WHILEINSTR
-    (7) INSTRUCCION -> . PRINTINSTR
-    (8) ASIGNACION -> . INT ID IGUAL EXPRESION
-    (9) ASIGNACION -> . STRING ID IGUAL CADENA
-    (10) ASIGNACION -> . FLOAT ID IGUAL EXPRESION
-    (15) IFINSTR -> . IF CONDICION INICIO ListaInstrucciones FIN
-    (17) WHILEINSTR -> . WHILE CONDICION INICIO ListaInstrucciones FIN
-    (18) PRINTINSTR -> . PRINT APERTUPAR CADENA CIERREPAR
-    (19) PRINTINSTR -> . PRINT APERTUPAR EXPRESION CIERREPAR
+    (6) INSTRUCCION -> . PRINTINSTR
+    (7) ASIGNACION -> . INT ID IGUAL EXPRESION
+    (8) ASIGNACION -> . STRING ID IGUAL CADENA
+    (9) ASIGNACION -> . FLOAT ID IGUAL EXPRESION
+    (17) IFINSTR -> . IF CONDICION INICIO ListaInstrucciones FIN
+    (19) PRINTINSTR -> . PRINT APERTUPAR CADENA CIERREPAR
+    (20) PRINTINSTR -> . PRINT APERTUPAR EXPRESION CIERREPAR
 
-    FIN             shift and go to state 16
-    INT             shift and go to state 10
-    STRING          shift and go to state 11
-    FLOAT           shift and go to state 12
-    IF              shift and go to state 13
-    WHILE           shift and go to state 14
-    PRINT           shift and go to state 15
+    FIN             shift and go to state 14
+    INT             shift and go to state 9
+    STRING          shift and go to state 10
+    FLOAT           shift and go to state 11
+    IF              shift and go to state 12
+    PRINT           shift and go to state 13
 
-    INSTRUCCION                    shift and go to state 17
+    INSTRUCCION                    shift and go to state 15
     ASIGNACION                     shift and go to state 6
     IFINSTR                        shift and go to state 7
-    WHILEINSTR                     shift and go to state 8
-    PRINTINSTR                     shift and go to state 9
+    PRINTINSTR                     shift and go to state 8
 
 state 5
 
@@ -150,7 +141,6 @@ state 5
     STRING          reduce using rule 2 (ListaInstrucciones -> INSTRUCCION .)
     FLOAT           reduce using rule 2 (ListaInstrucciones -> INSTRUCCION .)
     IF              reduce using rule 2 (ListaInstrucciones -> INSTRUCCION .)
-    WHILE           reduce using rule 2 (ListaInstrucciones -> INSTRUCCION .)
     PRINT           reduce using rule 2 (ListaInstrucciones -> INSTRUCCION .)
 
 
@@ -163,7 +153,6 @@ state 6
     STRING          reduce using rule 4 (INSTRUCCION -> ASIGNACION .)
     FLOAT           reduce using rule 4 (INSTRUCCION -> ASIGNACION .)
     IF              reduce using rule 4 (INSTRUCCION -> ASIGNACION .)
-    WHILE           reduce using rule 4 (INSTRUCCION -> ASIGNACION .)
     PRINT           reduce using rule 4 (INSTRUCCION -> ASIGNACION .)
 
 
@@ -176,91 +165,67 @@ state 7
     STRING          reduce using rule 5 (INSTRUCCION -> IFINSTR .)
     FLOAT           reduce using rule 5 (INSTRUCCION -> IFINSTR .)
     IF              reduce using rule 5 (INSTRUCCION -> IFINSTR .)
-    WHILE           reduce using rule 5 (INSTRUCCION -> IFINSTR .)
     PRINT           reduce using rule 5 (INSTRUCCION -> IFINSTR .)
 
 
 state 8
 
-    (6) INSTRUCCION -> WHILEINSTR .
+    (6) INSTRUCCION -> PRINTINSTR .
 
-    FIN             reduce using rule 6 (INSTRUCCION -> WHILEINSTR .)
-    INT             reduce using rule 6 (INSTRUCCION -> WHILEINSTR .)
-    STRING          reduce using rule 6 (INSTRUCCION -> WHILEINSTR .)
-    FLOAT           reduce using rule 6 (INSTRUCCION -> WHILEINSTR .)
-    IF              reduce using rule 6 (INSTRUCCION -> WHILEINSTR .)
-    WHILE           reduce using rule 6 (INSTRUCCION -> WHILEINSTR .)
-    PRINT           reduce using rule 6 (INSTRUCCION -> WHILEINSTR .)
+    FIN             reduce using rule 6 (INSTRUCCION -> PRINTINSTR .)
+    INT             reduce using rule 6 (INSTRUCCION -> PRINTINSTR .)
+    STRING          reduce using rule 6 (INSTRUCCION -> PRINTINSTR .)
+    FLOAT           reduce using rule 6 (INSTRUCCION -> PRINTINSTR .)
+    IF              reduce using rule 6 (INSTRUCCION -> PRINTINSTR .)
+    PRINT           reduce using rule 6 (INSTRUCCION -> PRINTINSTR .)
 
 
 state 9
 
-    (7) INSTRUCCION -> PRINTINSTR .
+    (7) ASIGNACION -> INT . ID IGUAL EXPRESION
 
-    FIN             reduce using rule 7 (INSTRUCCION -> PRINTINSTR .)
-    INT             reduce using rule 7 (INSTRUCCION -> PRINTINSTR .)
-    STRING          reduce using rule 7 (INSTRUCCION -> PRINTINSTR .)
-    FLOAT           reduce using rule 7 (INSTRUCCION -> PRINTINSTR .)
-    IF              reduce using rule 7 (INSTRUCCION -> PRINTINSTR .)
-    WHILE           reduce using rule 7 (INSTRUCCION -> PRINTINSTR .)
-    PRINT           reduce using rule 7 (INSTRUCCION -> PRINTINSTR .)
+    ID              shift and go to state 16
 
 
 state 10
 
-    (8) ASIGNACION -> INT . ID IGUAL EXPRESION
+    (8) ASIGNACION -> STRING . ID IGUAL CADENA
 
-    ID              shift and go to state 18
+    ID              shift and go to state 17
 
 
 state 11
 
-    (9) ASIGNACION -> STRING . ID IGUAL CADENA
+    (9) ASIGNACION -> FLOAT . ID IGUAL EXPRESION
 
-    ID              shift and go to state 19
+    ID              shift and go to state 18
 
 
 state 12
 
-    (10) ASIGNACION -> FLOAT . ID IGUAL EXPRESION
+    (17) IFINSTR -> IF . CONDICION INICIO ListaInstrucciones FIN
+    (18) CONDICION -> . APERTUPAR EXPRESION OPRELAC EXPRESION CIERREPAR
 
-    ID              shift and go to state 20
+    APERTUPAR       shift and go to state 20
 
+    CONDICION                      shift and go to state 19
 
 state 13
 
-    (15) IFINSTR -> IF . CONDICION INICIO ListaInstrucciones FIN
-    (16) CONDICION -> . APERTUPAR EXPRESION OPRELAC EXPRESION CIERREPAR
+    (19) PRINTINSTR -> PRINT . APERTUPAR CADENA CIERREPAR
+    (20) PRINTINSTR -> PRINT . APERTUPAR EXPRESION CIERREPAR
 
-    APERTUPAR       shift and go to state 22
+    APERTUPAR       shift and go to state 21
 
-    CONDICION                      shift and go to state 21
 
 state 14
-
-    (17) WHILEINSTR -> WHILE . CONDICION INICIO ListaInstrucciones FIN
-    (16) CONDICION -> . APERTUPAR EXPRESION OPRELAC EXPRESION CIERREPAR
-
-    APERTUPAR       shift and go to state 22
-
-    CONDICION                      shift and go to state 23
-
-state 15
-
-    (18) PRINTINSTR -> PRINT . APERTUPAR CADENA CIERREPAR
-    (19) PRINTINSTR -> PRINT . APERTUPAR EXPRESION CIERREPAR
-
-    APERTUPAR       shift and go to state 24
-
-
-state 16
 
     (1) Programa -> INICIO ID ListaInstrucciones FIN .
 
     $end            reduce using rule 1 (Programa -> INICIO ID ListaInstrucciones FIN .)
 
 
-state 17
+state 15
 
     (3) ListaInstrucciones -> ListaInstrucciones INSTRUCCION .
 
@@ -269,464 +234,409 @@ state 17
     STRING          reduce using rule 3 (ListaInstrucciones -> ListaInstrucciones INSTRUCCION .)
     FLOAT           reduce using rule 3 (ListaInstrucciones -> ListaInstrucciones INSTRUCCION .)
     IF              reduce using rule 3 (ListaInstrucciones -> ListaInstrucciones INSTRUCCION .)
-    WHILE           reduce using rule 3 (ListaInstrucciones -> ListaInstrucciones INSTRUCCION .)
     PRINT           reduce using rule 3 (ListaInstrucciones -> ListaInstrucciones INSTRUCCION .)
+
+
+state 16
+
+    (7) ASIGNACION -> INT ID . IGUAL EXPRESION
+
+    IGUAL           shift and go to state 22
+
+
+state 17
+
+    (8) ASIGNACION -> STRING ID . IGUAL CADENA
+
+    IGUAL           shift and go to state 23
 
 
 state 18
 
-    (8) ASIGNACION -> INT ID . IGUAL EXPRESION
+    (9) ASIGNACION -> FLOAT ID . IGUAL EXPRESION
 
-    IGUAL           shift and go to state 25
+    IGUAL           shift and go to state 24
 
 
 state 19
 
-    (9) ASIGNACION -> STRING ID . IGUAL CADENA
+    (17) IFINSTR -> IF CONDICION . INICIO ListaInstrucciones FIN
 
-    IGUAL           shift and go to state 26
+    INICIO          shift and go to state 25
 
 
 state 20
 
-    (10) ASIGNACION -> FLOAT ID . IGUAL EXPRESION
+    (18) CONDICION -> APERTUPAR . EXPRESION OPRELAC EXPRESION CIERREPAR
+    (10) EXPRESION -> . NUM
+    (11) EXPRESION -> . ID
+    (12) EXPRESION -> . OPERACION
+    (13) OPERACION -> . ID OPARIT ID
+    (14) OPERACION -> . ID OPARIT NUM
+    (15) OPERACION -> . NUM OPARIT NUM
+    (16) OPERACION -> . NUM OPARIT ID
 
-    IGUAL           shift and go to state 27
+    NUM             shift and go to state 27
+    ID              shift and go to state 28
 
+    EXPRESION                      shift and go to state 26
+    OPERACION                      shift and go to state 29
 
 state 21
 
-    (15) IFINSTR -> IF CONDICION . INICIO ListaInstrucciones FIN
+    (19) PRINTINSTR -> PRINT APERTUPAR . CADENA CIERREPAR
+    (20) PRINTINSTR -> PRINT APERTUPAR . EXPRESION CIERREPAR
+    (10) EXPRESION -> . NUM
+    (11) EXPRESION -> . ID
+    (12) EXPRESION -> . OPERACION
+    (13) OPERACION -> . ID OPARIT ID
+    (14) OPERACION -> . ID OPARIT NUM
+    (15) OPERACION -> . NUM OPARIT NUM
+    (16) OPERACION -> . NUM OPARIT ID
 
-    INICIO          shift and go to state 28
+    CADENA          shift and go to state 30
+    NUM             shift and go to state 27
+    ID              shift and go to state 28
 
+    EXPRESION                      shift and go to state 31
+    OPERACION                      shift and go to state 29
 
 state 22
 
-    (16) CONDICION -> APERTUPAR . EXPRESION OPRELAC EXPRESION CIERREPAR
-    (11) EXPRESION -> . NUM
-    (12) EXPRESION -> . ID
-    (13) EXPRESION -> . OPERACION
-    (14) OPERACION -> . EXPRESION OPARIT EXPRESION
+    (7) ASIGNACION -> INT ID IGUAL . EXPRESION
+    (10) EXPRESION -> . NUM
+    (11) EXPRESION -> . ID
+    (12) EXPRESION -> . OPERACION
+    (13) OPERACION -> . ID OPARIT ID
+    (14) OPERACION -> . ID OPARIT NUM
+    (15) OPERACION -> . NUM OPARIT NUM
+    (16) OPERACION -> . NUM OPARIT ID
 
-    NUM             shift and go to state 30
-    ID              shift and go to state 31
+    NUM             shift and go to state 27
+    ID              shift and go to state 28
 
-    EXPRESION                      shift and go to state 29
-    OPERACION                      shift and go to state 32
+    EXPRESION                      shift and go to state 32
+    OPERACION                      shift and go to state 29
 
 state 23
 
-    (17) WHILEINSTR -> WHILE CONDICION . INICIO ListaInstrucciones FIN
+    (8) ASIGNACION -> STRING ID IGUAL . CADENA
 
-    INICIO          shift and go to state 33
+    CADENA          shift and go to state 33
 
 
 state 24
 
-    (18) PRINTINSTR -> PRINT APERTUPAR . CADENA CIERREPAR
-    (19) PRINTINSTR -> PRINT APERTUPAR . EXPRESION CIERREPAR
-    (11) EXPRESION -> . NUM
-    (12) EXPRESION -> . ID
-    (13) EXPRESION -> . OPERACION
-    (14) OPERACION -> . EXPRESION OPARIT EXPRESION
+    (9) ASIGNACION -> FLOAT ID IGUAL . EXPRESION
+    (10) EXPRESION -> . NUM
+    (11) EXPRESION -> . ID
+    (12) EXPRESION -> . OPERACION
+    (13) OPERACION -> . ID OPARIT ID
+    (14) OPERACION -> . ID OPARIT NUM
+    (15) OPERACION -> . NUM OPARIT NUM
+    (16) OPERACION -> . NUM OPARIT ID
 
-    CADENA          shift and go to state 34
-    NUM             shift and go to state 30
-    ID              shift and go to state 31
+    NUM             shift and go to state 27
+    ID              shift and go to state 28
 
-    EXPRESION                      shift and go to state 35
-    OPERACION                      shift and go to state 32
+    EXPRESION                      shift and go to state 34
+    OPERACION                      shift and go to state 29
 
 state 25
 
-    (8) ASIGNACION -> INT ID IGUAL . EXPRESION
-    (11) EXPRESION -> . NUM
-    (12) EXPRESION -> . ID
-    (13) EXPRESION -> . OPERACION
-    (14) OPERACION -> . EXPRESION OPARIT EXPRESION
+    (17) IFINSTR -> IF CONDICION INICIO . ListaInstrucciones FIN
+    (2) ListaInstrucciones -> . INSTRUCCION
+    (3) ListaInstrucciones -> . ListaInstrucciones INSTRUCCION
+    (4) INSTRUCCION -> . ASIGNACION
+    (5) INSTRUCCION -> . IFINSTR
+    (6) INSTRUCCION -> . PRINTINSTR
+    (7) ASIGNACION -> . INT ID IGUAL EXPRESION
+    (8) ASIGNACION -> . STRING ID IGUAL CADENA
+    (9) ASIGNACION -> . FLOAT ID IGUAL EXPRESION
+    (17) IFINSTR -> . IF CONDICION INICIO ListaInstrucciones FIN
+    (19) PRINTINSTR -> . PRINT APERTUPAR CADENA CIERREPAR
+    (20) PRINTINSTR -> . PRINT APERTUPAR EXPRESION CIERREPAR
 
-    NUM             shift and go to state 30
-    ID              shift and go to state 31
+    INT             shift and go to state 9
+    STRING          shift and go to state 10
+    FLOAT           shift and go to state 11
+    IF              shift and go to state 12
+    PRINT           shift and go to state 13
 
-    EXPRESION                      shift and go to state 36
-    OPERACION                      shift and go to state 32
+    ListaInstrucciones             shift and go to state 35
+    INSTRUCCION                    shift and go to state 5
+    ASIGNACION                     shift and go to state 6
+    IFINSTR                        shift and go to state 7
+    PRINTINSTR                     shift and go to state 8
 
 state 26
 
-    (9) ASIGNACION -> STRING ID IGUAL . CADENA
+    (18) CONDICION -> APERTUPAR EXPRESION . OPRELAC EXPRESION CIERREPAR
 
-    CADENA          shift and go to state 37
+    OPRELAC         shift and go to state 36
 
 
 state 27
 
-    (10) ASIGNACION -> FLOAT ID IGUAL . EXPRESION
-    (11) EXPRESION -> . NUM
-    (12) EXPRESION -> . ID
-    (13) EXPRESION -> . OPERACION
-    (14) OPERACION -> . EXPRESION OPARIT EXPRESION
+    (10) EXPRESION -> NUM .
+    (15) OPERACION -> NUM . OPARIT NUM
+    (16) OPERACION -> NUM . OPARIT ID
 
-    NUM             shift and go to state 30
-    ID              shift and go to state 31
+    OPRELAC         reduce using rule 10 (EXPRESION -> NUM .)
+    CIERREPAR       reduce using rule 10 (EXPRESION -> NUM .)
+    FIN             reduce using rule 10 (EXPRESION -> NUM .)
+    INT             reduce using rule 10 (EXPRESION -> NUM .)
+    STRING          reduce using rule 10 (EXPRESION -> NUM .)
+    FLOAT           reduce using rule 10 (EXPRESION -> NUM .)
+    IF              reduce using rule 10 (EXPRESION -> NUM .)
+    PRINT           reduce using rule 10 (EXPRESION -> NUM .)
+    OPARIT          shift and go to state 37
 
-    EXPRESION                      shift and go to state 38
-    OPERACION                      shift and go to state 32
 
 state 28
 
-    (15) IFINSTR -> IF CONDICION INICIO . ListaInstrucciones FIN
-    (2) ListaInstrucciones -> . INSTRUCCION
-    (3) ListaInstrucciones -> . ListaInstrucciones INSTRUCCION
-    (4) INSTRUCCION -> . ASIGNACION
-    (5) INSTRUCCION -> . IFINSTR
-    (6) INSTRUCCION -> . WHILEINSTR
-    (7) INSTRUCCION -> . PRINTINSTR
-    (8) ASIGNACION -> . INT ID IGUAL EXPRESION
-    (9) ASIGNACION -> . STRING ID IGUAL CADENA
-    (10) ASIGNACION -> . FLOAT ID IGUAL EXPRESION
-    (15) IFINSTR -> . IF CONDICION INICIO ListaInstrucciones FIN
-    (17) WHILEINSTR -> . WHILE CONDICION INICIO ListaInstrucciones FIN
-    (18) PRINTINSTR -> . PRINT APERTUPAR CADENA CIERREPAR
-    (19) PRINTINSTR -> . PRINT APERTUPAR EXPRESION CIERREPAR
+    (11) EXPRESION -> ID .
+    (13) OPERACION -> ID . OPARIT ID
+    (14) OPERACION -> ID . OPARIT NUM
 
-    INT             shift and go to state 10
-    STRING          shift and go to state 11
-    FLOAT           shift and go to state 12
-    IF              shift and go to state 13
-    WHILE           shift and go to state 14
-    PRINT           shift and go to state 15
+    OPRELAC         reduce using rule 11 (EXPRESION -> ID .)
+    CIERREPAR       reduce using rule 11 (EXPRESION -> ID .)
+    FIN             reduce using rule 11 (EXPRESION -> ID .)
+    INT             reduce using rule 11 (EXPRESION -> ID .)
+    STRING          reduce using rule 11 (EXPRESION -> ID .)
+    FLOAT           reduce using rule 11 (EXPRESION -> ID .)
+    IF              reduce using rule 11 (EXPRESION -> ID .)
+    PRINT           reduce using rule 11 (EXPRESION -> ID .)
+    OPARIT          shift and go to state 38
 
-    ListaInstrucciones             shift and go to state 39
-    INSTRUCCION                    shift and go to state 5
-    ASIGNACION                     shift and go to state 6
-    IFINSTR                        shift and go to state 7
-    WHILEINSTR                     shift and go to state 8
-    PRINTINSTR                     shift and go to state 9
 
 state 29
 
-    (16) CONDICION -> APERTUPAR EXPRESION . OPRELAC EXPRESION CIERREPAR
-    (14) OPERACION -> EXPRESION . OPARIT EXPRESION
+    (12) EXPRESION -> OPERACION .
 
-    OPRELAC         shift and go to state 40
-    OPARIT          shift and go to state 41
+    OPRELAC         reduce using rule 12 (EXPRESION -> OPERACION .)
+    CIERREPAR       reduce using rule 12 (EXPRESION -> OPERACION .)
+    FIN             reduce using rule 12 (EXPRESION -> OPERACION .)
+    INT             reduce using rule 12 (EXPRESION -> OPERACION .)
+    STRING          reduce using rule 12 (EXPRESION -> OPERACION .)
+    FLOAT           reduce using rule 12 (EXPRESION -> OPERACION .)
+    IF              reduce using rule 12 (EXPRESION -> OPERACION .)
+    PRINT           reduce using rule 12 (EXPRESION -> OPERACION .)
 
 
 state 30
 
-    (11) EXPRESION -> NUM .
+    (19) PRINTINSTR -> PRINT APERTUPAR CADENA . CIERREPAR
 
-    OPRELAC         reduce using rule 11 (EXPRESION -> NUM .)
-    OPARIT          reduce using rule 11 (EXPRESION -> NUM .)
-    CIERREPAR       reduce using rule 11 (EXPRESION -> NUM .)
-    FIN             reduce using rule 11 (EXPRESION -> NUM .)
-    INT             reduce using rule 11 (EXPRESION -> NUM .)
-    STRING          reduce using rule 11 (EXPRESION -> NUM .)
-    FLOAT           reduce using rule 11 (EXPRESION -> NUM .)
-    IF              reduce using rule 11 (EXPRESION -> NUM .)
-    WHILE           reduce using rule 11 (EXPRESION -> NUM .)
-    PRINT           reduce using rule 11 (EXPRESION -> NUM .)
+    CIERREPAR       shift and go to state 39
 
 
 state 31
 
-    (12) EXPRESION -> ID .
+    (20) PRINTINSTR -> PRINT APERTUPAR EXPRESION . CIERREPAR
 
-    OPRELAC         reduce using rule 12 (EXPRESION -> ID .)
-    OPARIT          reduce using rule 12 (EXPRESION -> ID .)
-    CIERREPAR       reduce using rule 12 (EXPRESION -> ID .)
-    FIN             reduce using rule 12 (EXPRESION -> ID .)
-    INT             reduce using rule 12 (EXPRESION -> ID .)
-    STRING          reduce using rule 12 (EXPRESION -> ID .)
-    FLOAT           reduce using rule 12 (EXPRESION -> ID .)
-    IF              reduce using rule 12 (EXPRESION -> ID .)
-    WHILE           reduce using rule 12 (EXPRESION -> ID .)
-    PRINT           reduce using rule 12 (EXPRESION -> ID .)
+    CIERREPAR       shift and go to state 40
 
 
 state 32
 
-    (13) EXPRESION -> OPERACION .
+    (7) ASIGNACION -> INT ID IGUAL EXPRESION .
 
-    OPRELAC         reduce using rule 13 (EXPRESION -> OPERACION .)
-    OPARIT          reduce using rule 13 (EXPRESION -> OPERACION .)
-    CIERREPAR       reduce using rule 13 (EXPRESION -> OPERACION .)
-    FIN             reduce using rule 13 (EXPRESION -> OPERACION .)
-    INT             reduce using rule 13 (EXPRESION -> OPERACION .)
-    STRING          reduce using rule 13 (EXPRESION -> OPERACION .)
-    FLOAT           reduce using rule 13 (EXPRESION -> OPERACION .)
-    IF              reduce using rule 13 (EXPRESION -> OPERACION .)
-    WHILE           reduce using rule 13 (EXPRESION -> OPERACION .)
-    PRINT           reduce using rule 13 (EXPRESION -> OPERACION .)
+    FIN             reduce using rule 7 (ASIGNACION -> INT ID IGUAL EXPRESION .)
+    INT             reduce using rule 7 (ASIGNACION -> INT ID IGUAL EXPRESION .)
+    STRING          reduce using rule 7 (ASIGNACION -> INT ID IGUAL EXPRESION .)
+    FLOAT           reduce using rule 7 (ASIGNACION -> INT ID IGUAL EXPRESION .)
+    IF              reduce using rule 7 (ASIGNACION -> INT ID IGUAL EXPRESION .)
+    PRINT           reduce using rule 7 (ASIGNACION -> INT ID IGUAL EXPRESION .)
 
 
 state 33
 
-    (17) WHILEINSTR -> WHILE CONDICION INICIO . ListaInstrucciones FIN
-    (2) ListaInstrucciones -> . INSTRUCCION
-    (3) ListaInstrucciones -> . ListaInstrucciones INSTRUCCION
-    (4) INSTRUCCION -> . ASIGNACION
-    (5) INSTRUCCION -> . IFINSTR
-    (6) INSTRUCCION -> . WHILEINSTR
-    (7) INSTRUCCION -> . PRINTINSTR
-    (8) ASIGNACION -> . INT ID IGUAL EXPRESION
-    (9) ASIGNACION -> . STRING ID IGUAL CADENA
-    (10) ASIGNACION -> . FLOAT ID IGUAL EXPRESION
-    (15) IFINSTR -> . IF CONDICION INICIO ListaInstrucciones FIN
-    (17) WHILEINSTR -> . WHILE CONDICION INICIO ListaInstrucciones FIN
-    (18) PRINTINSTR -> . PRINT APERTUPAR CADENA CIERREPAR
-    (19) PRINTINSTR -> . PRINT APERTUPAR EXPRESION CIERREPAR
+    (8) ASIGNACION -> STRING ID IGUAL CADENA .
 
-    INT             shift and go to state 10
-    STRING          shift and go to state 11
-    FLOAT           shift and go to state 12
-    IF              shift and go to state 13
-    WHILE           shift and go to state 14
-    PRINT           shift and go to state 15
+    FIN             reduce using rule 8 (ASIGNACION -> STRING ID IGUAL CADENA .)
+    INT             reduce using rule 8 (ASIGNACION -> STRING ID IGUAL CADENA .)
+    STRING          reduce using rule 8 (ASIGNACION -> STRING ID IGUAL CADENA .)
+    FLOAT           reduce using rule 8 (ASIGNACION -> STRING ID IGUAL CADENA .)
+    IF              reduce using rule 8 (ASIGNACION -> STRING ID IGUAL CADENA .)
+    PRINT           reduce using rule 8 (ASIGNACION -> STRING ID IGUAL CADENA .)
 
-    ListaInstrucciones             shift and go to state 42
-    INSTRUCCION                    shift and go to state 5
-    ASIGNACION                     shift and go to state 6
-    IFINSTR                        shift and go to state 7
-    WHILEINSTR                     shift and go to state 8
-    PRINTINSTR                     shift and go to state 9
 
 state 34
 
-    (18) PRINTINSTR -> PRINT APERTUPAR CADENA . CIERREPAR
+    (9) ASIGNACION -> FLOAT ID IGUAL EXPRESION .
 
-    CIERREPAR       shift and go to state 43
+    FIN             reduce using rule 9 (ASIGNACION -> FLOAT ID IGUAL EXPRESION .)
+    INT             reduce using rule 9 (ASIGNACION -> FLOAT ID IGUAL EXPRESION .)
+    STRING          reduce using rule 9 (ASIGNACION -> FLOAT ID IGUAL EXPRESION .)
+    FLOAT           reduce using rule 9 (ASIGNACION -> FLOAT ID IGUAL EXPRESION .)
+    IF              reduce using rule 9 (ASIGNACION -> FLOAT ID IGUAL EXPRESION .)
+    PRINT           reduce using rule 9 (ASIGNACION -> FLOAT ID IGUAL EXPRESION .)
 
 
 state 35
 
-    (19) PRINTINSTR -> PRINT APERTUPAR EXPRESION . CIERREPAR
-    (14) OPERACION -> EXPRESION . OPARIT EXPRESION
+    (17) IFINSTR -> IF CONDICION INICIO ListaInstrucciones . FIN
+    (3) ListaInstrucciones -> ListaInstrucciones . INSTRUCCION
+    (4) INSTRUCCION -> . ASIGNACION
+    (5) INSTRUCCION -> . IFINSTR
+    (6) INSTRUCCION -> . PRINTINSTR
+    (7) ASIGNACION -> . INT ID IGUAL EXPRESION
+    (8) ASIGNACION -> . STRING ID IGUAL CADENA
+    (9) ASIGNACION -> . FLOAT ID IGUAL EXPRESION
+    (17) IFINSTR -> . IF CONDICION INICIO ListaInstrucciones FIN
+    (19) PRINTINSTR -> . PRINT APERTUPAR CADENA CIERREPAR
+    (20) PRINTINSTR -> . PRINT APERTUPAR EXPRESION CIERREPAR
 
-    CIERREPAR       shift and go to state 44
-    OPARIT          shift and go to state 41
+    FIN             shift and go to state 41
+    INT             shift and go to state 9
+    STRING          shift and go to state 10
+    FLOAT           shift and go to state 11
+    IF              shift and go to state 12
+    PRINT           shift and go to state 13
 
+    INSTRUCCION                    shift and go to state 15
+    ASIGNACION                     shift and go to state 6
+    IFINSTR                        shift and go to state 7
+    PRINTINSTR                     shift and go to state 8
 
 state 36
 
-    (8) ASIGNACION -> INT ID IGUAL EXPRESION .
-    (14) OPERACION -> EXPRESION . OPARIT EXPRESION
+    (18) CONDICION -> APERTUPAR EXPRESION OPRELAC . EXPRESION CIERREPAR
+    (10) EXPRESION -> . NUM
+    (11) EXPRESION -> . ID
+    (12) EXPRESION -> . OPERACION
+    (13) OPERACION -> . ID OPARIT ID
+    (14) OPERACION -> . ID OPARIT NUM
+    (15) OPERACION -> . NUM OPARIT NUM
+    (16) OPERACION -> . NUM OPARIT ID
 
-    FIN             reduce using rule 8 (ASIGNACION -> INT ID IGUAL EXPRESION .)
-    INT             reduce using rule 8 (ASIGNACION -> INT ID IGUAL EXPRESION .)
-    STRING          reduce using rule 8 (ASIGNACION -> INT ID IGUAL EXPRESION .)
-    FLOAT           reduce using rule 8 (ASIGNACION -> INT ID IGUAL EXPRESION .)
-    IF              reduce using rule 8 (ASIGNACION -> INT ID IGUAL EXPRESION .)
-    WHILE           reduce using rule 8 (ASIGNACION -> INT ID IGUAL EXPRESION .)
-    PRINT           reduce using rule 8 (ASIGNACION -> INT ID IGUAL EXPRESION .)
-    OPARIT          shift and go to state 41
+    NUM             shift and go to state 27
+    ID              shift and go to state 28
 
+    EXPRESION                      shift and go to state 42
+    OPERACION                      shift and go to state 29
 
 state 37
 
-    (9) ASIGNACION -> STRING ID IGUAL CADENA .
+    (15) OPERACION -> NUM OPARIT . NUM
+    (16) OPERACION -> NUM OPARIT . ID
 
-    FIN             reduce using rule 9 (ASIGNACION -> STRING ID IGUAL CADENA .)
-    INT             reduce using rule 9 (ASIGNACION -> STRING ID IGUAL CADENA .)
-    STRING          reduce using rule 9 (ASIGNACION -> STRING ID IGUAL CADENA .)
-    FLOAT           reduce using rule 9 (ASIGNACION -> STRING ID IGUAL CADENA .)
-    IF              reduce using rule 9 (ASIGNACION -> STRING ID IGUAL CADENA .)
-    WHILE           reduce using rule 9 (ASIGNACION -> STRING ID IGUAL CADENA .)
-    PRINT           reduce using rule 9 (ASIGNACION -> STRING ID IGUAL CADENA .)
+    NUM             shift and go to state 43
+    ID              shift and go to state 44
 
 
 state 38
 
-    (10) ASIGNACION -> FLOAT ID IGUAL EXPRESION .
-    (14) OPERACION -> EXPRESION . OPARIT EXPRESION
+    (13) OPERACION -> ID OPARIT . ID
+    (14) OPERACION -> ID OPARIT . NUM
 
-    FIN             reduce using rule 10 (ASIGNACION -> FLOAT ID IGUAL EXPRESION .)
-    INT             reduce using rule 10 (ASIGNACION -> FLOAT ID IGUAL EXPRESION .)
-    STRING          reduce using rule 10 (ASIGNACION -> FLOAT ID IGUAL EXPRESION .)
-    FLOAT           reduce using rule 10 (ASIGNACION -> FLOAT ID IGUAL EXPRESION .)
-    IF              reduce using rule 10 (ASIGNACION -> FLOAT ID IGUAL EXPRESION .)
-    WHILE           reduce using rule 10 (ASIGNACION -> FLOAT ID IGUAL EXPRESION .)
-    PRINT           reduce using rule 10 (ASIGNACION -> FLOAT ID IGUAL EXPRESION .)
-    OPARIT          shift and go to state 41
+    ID              shift and go to state 45
+    NUM             shift and go to state 46
 
 
 state 39
 
-    (15) IFINSTR -> IF CONDICION INICIO ListaInstrucciones . FIN
-    (3) ListaInstrucciones -> ListaInstrucciones . INSTRUCCION
-    (4) INSTRUCCION -> . ASIGNACION
-    (5) INSTRUCCION -> . IFINSTR
-    (6) INSTRUCCION -> . WHILEINSTR
-    (7) INSTRUCCION -> . PRINTINSTR
-    (8) ASIGNACION -> . INT ID IGUAL EXPRESION
-    (9) ASIGNACION -> . STRING ID IGUAL CADENA
-    (10) ASIGNACION -> . FLOAT ID IGUAL EXPRESION
-    (15) IFINSTR -> . IF CONDICION INICIO ListaInstrucciones FIN
-    (17) WHILEINSTR -> . WHILE CONDICION INICIO ListaInstrucciones FIN
-    (18) PRINTINSTR -> . PRINT APERTUPAR CADENA CIERREPAR
-    (19) PRINTINSTR -> . PRINT APERTUPAR EXPRESION CIERREPAR
+    (19) PRINTINSTR -> PRINT APERTUPAR CADENA CIERREPAR .
 
-    FIN             shift and go to state 45
-    INT             shift and go to state 10
-    STRING          shift and go to state 11
-    FLOAT           shift and go to state 12
-    IF              shift and go to state 13
-    WHILE           shift and go to state 14
-    PRINT           shift and go to state 15
+    FIN             reduce using rule 19 (PRINTINSTR -> PRINT APERTUPAR CADENA CIERREPAR .)
+    INT             reduce using rule 19 (PRINTINSTR -> PRINT APERTUPAR CADENA CIERREPAR .)
+    STRING          reduce using rule 19 (PRINTINSTR -> PRINT APERTUPAR CADENA CIERREPAR .)
+    FLOAT           reduce using rule 19 (PRINTINSTR -> PRINT APERTUPAR CADENA CIERREPAR .)
+    IF              reduce using rule 19 (PRINTINSTR -> PRINT APERTUPAR CADENA CIERREPAR .)
+    PRINT           reduce using rule 19 (PRINTINSTR -> PRINT APERTUPAR CADENA CIERREPAR .)
 
-    INSTRUCCION                    shift and go to state 17
-    ASIGNACION                     shift and go to state 6
-    IFINSTR                        shift and go to state 7
-    WHILEINSTR                     shift and go to state 8
-    PRINTINSTR                     shift and go to state 9
 
 state 40
 
-    (16) CONDICION -> APERTUPAR EXPRESION OPRELAC . EXPRESION CIERREPAR
-    (11) EXPRESION -> . NUM
-    (12) EXPRESION -> . ID
-    (13) EXPRESION -> . OPERACION
-    (14) OPERACION -> . EXPRESION OPARIT EXPRESION
+    (20) PRINTINSTR -> PRINT APERTUPAR EXPRESION CIERREPAR .
 
-    NUM             shift and go to state 30
-    ID              shift and go to state 31
+    FIN             reduce using rule 20 (PRINTINSTR -> PRINT APERTUPAR EXPRESION CIERREPAR .)
+    INT             reduce using rule 20 (PRINTINSTR -> PRINT APERTUPAR EXPRESION CIERREPAR .)
+    STRING          reduce using rule 20 (PRINTINSTR -> PRINT APERTUPAR EXPRESION CIERREPAR .)
+    FLOAT           reduce using rule 20 (PRINTINSTR -> PRINT APERTUPAR EXPRESION CIERREPAR .)
+    IF              reduce using rule 20 (PRINTINSTR -> PRINT APERTUPAR EXPRESION CIERREPAR .)
+    PRINT           reduce using rule 20 (PRINTINSTR -> PRINT APERTUPAR EXPRESION CIERREPAR .)
 
-    EXPRESION                      shift and go to state 46
-    OPERACION                      shift and go to state 32
 
 state 41
 
-    (14) OPERACION -> EXPRESION OPARIT . EXPRESION
-    (11) EXPRESION -> . NUM
-    (12) EXPRESION -> . ID
-    (13) EXPRESION -> . OPERACION
-    (14) OPERACION -> . EXPRESION OPARIT EXPRESION
+    (17) IFINSTR -> IF CONDICION INICIO ListaInstrucciones FIN .
 
-    NUM             shift and go to state 30
-    ID              shift and go to state 31
+    FIN             reduce using rule 17 (IFINSTR -> IF CONDICION INICIO ListaInstrucciones FIN .)
+    INT             reduce using rule 17 (IFINSTR -> IF CONDICION INICIO ListaInstrucciones FIN .)
+    STRING          reduce using rule 17 (IFINSTR -> IF CONDICION INICIO ListaInstrucciones FIN .)
+    FLOAT           reduce using rule 17 (IFINSTR -> IF CONDICION INICIO ListaInstrucciones FIN .)
+    IF              reduce using rule 17 (IFINSTR -> IF CONDICION INICIO ListaInstrucciones FIN .)
+    PRINT           reduce using rule 17 (IFINSTR -> IF CONDICION INICIO ListaInstrucciones FIN .)
 
-    EXPRESION                      shift and go to state 47
-    OPERACION                      shift and go to state 32
 
 state 42
 
-    (17) WHILEINSTR -> WHILE CONDICION INICIO ListaInstrucciones . FIN
-    (3) ListaInstrucciones -> ListaInstrucciones . INSTRUCCION
-    (4) INSTRUCCION -> . ASIGNACION
-    (5) INSTRUCCION -> . IFINSTR
-    (6) INSTRUCCION -> . WHILEINSTR
-    (7) INSTRUCCION -> . PRINTINSTR
-    (8) ASIGNACION -> . INT ID IGUAL EXPRESION
-    (9) ASIGNACION -> . STRING ID IGUAL CADENA
-    (10) ASIGNACION -> . FLOAT ID IGUAL EXPRESION
-    (15) IFINSTR -> . IF CONDICION INICIO ListaInstrucciones FIN
-    (17) WHILEINSTR -> . WHILE CONDICION INICIO ListaInstrucciones FIN
-    (18) PRINTINSTR -> . PRINT APERTUPAR CADENA CIERREPAR
-    (19) PRINTINSTR -> . PRINT APERTUPAR EXPRESION CIERREPAR
+    (18) CONDICION -> APERTUPAR EXPRESION OPRELAC EXPRESION . CIERREPAR
 
-    FIN             shift and go to state 48
-    INT             shift and go to state 10
-    STRING          shift and go to state 11
-    FLOAT           shift and go to state 12
-    IF              shift and go to state 13
-    WHILE           shift and go to state 14
-    PRINT           shift and go to state 15
+    CIERREPAR       shift and go to state 47
 
-    INSTRUCCION                    shift and go to state 17
-    ASIGNACION                     shift and go to state 6
-    IFINSTR                        shift and go to state 7
-    WHILEINSTR                     shift and go to state 8
-    PRINTINSTR                     shift and go to state 9
 
 state 43
 
-    (18) PRINTINSTR -> PRINT APERTUPAR CADENA CIERREPAR .
+    (15) OPERACION -> NUM OPARIT NUM .
 
-    FIN             reduce using rule 18 (PRINTINSTR -> PRINT APERTUPAR CADENA CIERREPAR .)
-    INT             reduce using rule 18 (PRINTINSTR -> PRINT APERTUPAR CADENA CIERREPAR .)
-    STRING          reduce using rule 18 (PRINTINSTR -> PRINT APERTUPAR CADENA CIERREPAR .)
-    FLOAT           reduce using rule 18 (PRINTINSTR -> PRINT APERTUPAR CADENA CIERREPAR .)
-    IF              reduce using rule 18 (PRINTINSTR -> PRINT APERTUPAR CADENA CIERREPAR .)
-    WHILE           reduce using rule 18 (PRINTINSTR -> PRINT APERTUPAR CADENA CIERREPAR .)
-    PRINT           reduce using rule 18 (PRINTINSTR -> PRINT APERTUPAR CADENA CIERREPAR .)
+    OPRELAC         reduce using rule 15 (OPERACION -> NUM OPARIT NUM .)
+    CIERREPAR       reduce using rule 15 (OPERACION -> NUM OPARIT NUM .)
+    FIN             reduce using rule 15 (OPERACION -> NUM OPARIT NUM .)
+    INT             reduce using rule 15 (OPERACION -> NUM OPARIT NUM .)
+    STRING          reduce using rule 15 (OPERACION -> NUM OPARIT NUM .)
+    FLOAT           reduce using rule 15 (OPERACION -> NUM OPARIT NUM .)
+    IF              reduce using rule 15 (OPERACION -> NUM OPARIT NUM .)
+    PRINT           reduce using rule 15 (OPERACION -> NUM OPARIT NUM .)
 
 
 state 44
 
-    (19) PRINTINSTR -> PRINT APERTUPAR EXPRESION CIERREPAR .
+    (16) OPERACION -> NUM OPARIT ID .
 
-    FIN             reduce using rule 19 (PRINTINSTR -> PRINT APERTUPAR EXPRESION CIERREPAR .)
-    INT             reduce using rule 19 (PRINTINSTR -> PRINT APERTUPAR EXPRESION CIERREPAR .)
-    STRING          reduce using rule 19 (PRINTINSTR -> PRINT APERTUPAR EXPRESION CIERREPAR .)
-    FLOAT           reduce using rule 19 (PRINTINSTR -> PRINT APERTUPAR EXPRESION CIERREPAR .)
-    IF              reduce using rule 19 (PRINTINSTR -> PRINT APERTUPAR EXPRESION CIERREPAR .)
-    WHILE           reduce using rule 19 (PRINTINSTR -> PRINT APERTUPAR EXPRESION CIERREPAR .)
-    PRINT           reduce using rule 19 (PRINTINSTR -> PRINT APERTUPAR EXPRESION CIERREPAR .)
+    OPRELAC         reduce using rule 16 (OPERACION -> NUM OPARIT ID .)
+    CIERREPAR       reduce using rule 16 (OPERACION -> NUM OPARIT ID .)
+    FIN             reduce using rule 16 (OPERACION -> NUM OPARIT ID .)
+    INT             reduce using rule 16 (OPERACION -> NUM OPARIT ID .)
+    STRING          reduce using rule 16 (OPERACION -> NUM OPARIT ID .)
+    FLOAT           reduce using rule 16 (OPERACION -> NUM OPARIT ID .)
+    IF              reduce using rule 16 (OPERACION -> NUM OPARIT ID .)
+    PRINT           reduce using rule 16 (OPERACION -> NUM OPARIT ID .)
 
 
 state 45
 
-    (15) IFINSTR -> IF CONDICION INICIO ListaInstrucciones FIN .
+    (13) OPERACION -> ID OPARIT ID .
 
-    FIN             reduce using rule 15 (IFINSTR -> IF CONDICION INICIO ListaInstrucciones FIN .)
-    INT             reduce using rule 15 (IFINSTR -> IF CONDICION INICIO ListaInstrucciones FIN .)
-    STRING          reduce using rule 15 (IFINSTR -> IF CONDICION INICIO ListaInstrucciones FIN .)
-    FLOAT           reduce using rule 15 (IFINSTR -> IF CONDICION INICIO ListaInstrucciones FIN .)
-    IF              reduce using rule 15 (IFINSTR -> IF CONDICION INICIO ListaInstrucciones FIN .)
-    WHILE           reduce using rule 15 (IFINSTR -> IF CONDICION INICIO ListaInstrucciones FIN .)
-    PRINT           reduce using rule 15 (IFINSTR -> IF CONDICION INICIO ListaInstrucciones FIN .)
+    OPRELAC         reduce using rule 13 (OPERACION -> ID OPARIT ID .)
+    CIERREPAR       reduce using rule 13 (OPERACION -> ID OPARIT ID .)
+    FIN             reduce using rule 13 (OPERACION -> ID OPARIT ID .)
+    INT             reduce using rule 13 (OPERACION -> ID OPARIT ID .)
+    STRING          reduce using rule 13 (OPERACION -> ID OPARIT ID .)
+    FLOAT           reduce using rule 13 (OPERACION -> ID OPARIT ID .)
+    IF              reduce using rule 13 (OPERACION -> ID OPARIT ID .)
+    PRINT           reduce using rule 13 (OPERACION -> ID OPARIT ID .)
 
 
 state 46
 
-    (16) CONDICION -> APERTUPAR EXPRESION OPRELAC EXPRESION . CIERREPAR
-    (14) OPERACION -> EXPRESION . OPARIT EXPRESION
+    (14) OPERACION -> ID OPARIT NUM .
 
-    CIERREPAR       shift and go to state 49
-    OPARIT          shift and go to state 41
+    OPRELAC         reduce using rule 14 (OPERACION -> ID OPARIT NUM .)
+    CIERREPAR       reduce using rule 14 (OPERACION -> ID OPARIT NUM .)
+    FIN             reduce using rule 14 (OPERACION -> ID OPARIT NUM .)
+    INT             reduce using rule 14 (OPERACION -> ID OPARIT NUM .)
+    STRING          reduce using rule 14 (OPERACION -> ID OPARIT NUM .)
+    FLOAT           reduce using rule 14 (OPERACION -> ID OPARIT NUM .)
+    IF              reduce using rule 14 (OPERACION -> ID OPARIT NUM .)
+    PRINT           reduce using rule 14 (OPERACION -> ID OPARIT NUM .)
 
 
 state 47
 
-    (14) OPERACION -> EXPRESION OPARIT EXPRESION .
-    (14) OPERACION -> EXPRESION . OPARIT EXPRESION
+    (18) CONDICION -> APERTUPAR EXPRESION OPRELAC EXPRESION CIERREPAR .
 
-  ! shift/reduce conflict for OPARIT resolved as shift
-    OPRELAC         reduce using rule 14 (OPERACION -> EXPRESION OPARIT EXPRESION .)
-    CIERREPAR       reduce using rule 14 (OPERACION -> EXPRESION OPARIT EXPRESION .)
-    FIN             reduce using rule 14 (OPERACION -> EXPRESION OPARIT EXPRESION .)
-    INT             reduce using rule 14 (OPERACION -> EXPRESION OPARIT EXPRESION .)
-    STRING          reduce using rule 14 (OPERACION -> EXPRESION OPARIT EXPRESION .)
-    FLOAT           reduce using rule 14 (OPERACION -> EXPRESION OPARIT EXPRESION .)
-    IF              reduce using rule 14 (OPERACION -> EXPRESION OPARIT EXPRESION .)
-    WHILE           reduce using rule 14 (OPERACION -> EXPRESION OPARIT EXPRESION .)
-    PRINT           reduce using rule 14 (OPERACION -> EXPRESION OPARIT EXPRESION .)
-    OPARIT          shift and go to state 41
+    INICIO          reduce using rule 18 (CONDICION -> APERTUPAR EXPRESION OPRELAC EXPRESION CIERREPAR .)
 
-  ! OPARIT          [ reduce using rule 14 (OPERACION -> EXPRESION OPARIT EXPRESION .) ]
-
-
-state 48
-
-    (17) WHILEINSTR -> WHILE CONDICION INICIO ListaInstrucciones FIN .
-
-    FIN             reduce using rule 17 (WHILEINSTR -> WHILE CONDICION INICIO ListaInstrucciones FIN .)
-    INT             reduce using rule 17 (WHILEINSTR -> WHILE CONDICION INICIO ListaInstrucciones FIN .)
-    STRING          reduce using rule 17 (WHILEINSTR -> WHILE CONDICION INICIO ListaInstrucciones FIN .)
-    FLOAT           reduce using rule 17 (WHILEINSTR -> WHILE CONDICION INICIO ListaInstrucciones FIN .)
-    IF              reduce using rule 17 (WHILEINSTR -> WHILE CONDICION INICIO ListaInstrucciones FIN .)
-    WHILE           reduce using rule 17 (WHILEINSTR -> WHILE CONDICION INICIO ListaInstrucciones FIN .)
-    PRINT           reduce using rule 17 (WHILEINSTR -> WHILE CONDICION INICIO ListaInstrucciones FIN .)
-
-
-state 49
-
-    (16) CONDICION -> APERTUPAR EXPRESION OPRELAC EXPRESION CIERREPAR .
-
-    INICIO          reduce using rule 16 (CONDICION -> APERTUPAR EXPRESION OPRELAC EXPRESION CIERREPAR .)
-
-WARNING: 
-WARNING: Conflicts:
-WARNING: 
-WARNING: shift/reduce conflict for OPARIT in state 47 resolved as shift

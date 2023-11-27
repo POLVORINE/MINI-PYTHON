@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'APERTUPAR CADENA CIERREPAR FIN FLOAT ID IF IGUAL INICIO INT NUM OPARIT OPRELAC PRINT STRING WHILEPrograma : INICIO ID ListaInstrucciones FIN\n    ListaInstrucciones  : INSTRUCCION\n                        | ListaInstrucciones INSTRUCCION\n    \n    INSTRUCCION : ASIGNACION\n                | IFINSTR\n                | WHILEINSTR\n                | PRINTINSTR\n    \n    ASIGNACION : INT ID IGUAL EXPRESION\n                | STRING ID IGUAL CADENA\n                | FLOAT ID IGUAL EXPRESION\n    \n    EXPRESION   : NUM\n                | ID\n                | OPERACION\n    \n    OPERACION :  EXPRESION OPARIT EXPRESION\n    \n    IFINSTR : IF  CONDICION  INICIO ListaInstrucciones FIN\n    \n    CONDICION :  APERTUPAR EXPRESION OPRELAC EXPRESION CIERREPAR\n    \n    WHILEINSTR : WHILE CONDICION INICIO ListaInstrucciones FIN\n    \n    PRINTINSTR  : PRINT APERTUPAR CADENA CIERREPAR\n                | PRINT APERTUPAR EXPRESION   CIERREPAR\n    '
+_lr_signature = 'APERTUPAR CADENA CIERREPAR FIN FLOAT ID IF IGUAL INICIO INT NUM OPARIT OPRELAC PRINT STRINGPrograma : INICIO ID ListaInstrucciones FIN\n    ListaInstrucciones  : INSTRUCCION\n                        | ListaInstrucciones INSTRUCCION\n    \n    INSTRUCCION : ASIGNACION\n                | IFINSTR\n                | PRINTINSTR\n    \n    ASIGNACION : INT ID IGUAL EXPRESION\n                | STRING ID IGUAL CADENA\n                | FLOAT ID IGUAL EXPRESION\n    \n    EXPRESION   : NUM\n                | ID\n                | OPERACION\n    \n    OPERACION :  ID OPARIT ID\n              | ID OPARIT   NUM\n              | NUM OPARIT   NUM\n              | NUM OPARIT   ID\n\n\n    \n    IFINSTR : IF  CONDICION  INICIO ListaInstrucciones FIN\n    \n    CONDICION :  APERTUPAR EXPRESION OPRELAC EXPRESION CIERREPAR\n    \n    PRINTINSTR  : PRINT APERTUPAR CADENA CIERREPAR\n                | PRINT APERTUPAR EXPRESION   CIERREPAR\n    '
     
-_lr_action_items = {'INICIO':([0,21,23,49,],[2,28,33,-16,]),'$end':([1,16,],[0,-1,]),'ID':([2,10,11,12,22,24,25,27,40,41,],[3,18,19,20,31,31,31,31,31,31,]),'INT':([3,4,5,6,7,8,9,17,28,30,31,32,33,36,37,38,39,42,43,44,45,47,48,],[10,10,-2,-4,-5,-6,-7,-3,10,-11,-12,-13,10,-8,-9,-10,10,10,-18,-19,-15,-14,-17,]),'STRING':([3,4,5,6,7,8,9,17,28,30,31,32,33,36,37,38,39,42,43,44,45,47,48,],[11,11,-2,-4,-5,-6,-7,-3,11,-11,-12,-13,11,-8,-9,-10,11,11,-18,-19,-15,-14,-17,]),'FLOAT':([3,4,5,6,7,8,9,17,28,30,31,32,33,36,37,38,39,42,43,44,45,47,48,],[12,12,-2,-4,-5,-6,-7,-3,12,-11,-12,-13,12,-8,-9,-10,12,12,-18,-19,-15,-14,-17,]),'IF':([3,4,5,6,7,8,9,17,28,30,31,32,33,36,37,38,39,42,43,44,45,47,48,],[13,13,-2,-4,-5,-6,-7,-3,13,-11,-12,-13,13,-8,-9,-10,13,13,-18,-19,-15,-14,-17,]),'WHILE':([3,4,5,6,7,8,9,17,28,30,31,32,33,36,37,38,39,42,43,44,45,47,48,],[14,14,-2,-4,-5,-6,-7,-3,14,-11,-12,-13,14,-8,-9,-10,14,14,-18,-19,-15,-14,-17,]),'PRINT':([3,4,5,6,7,8,9,17,28,30,31,32,33,36,37,38,39,42,43,44,45,47,48,],[15,15,-2,-4,-5,-6,-7,-3,15,-11,-12,-13,15,-8,-9,-10,15,15,-18,-19,-15,-14,-17,]),'FIN':([4,5,6,7,8,9,17,30,31,32,36,37,38,39,42,43,44,45,47,48,],[16,-2,-4,-5,-6,-7,-3,-11,-12,-13,-8,-9,-10,45,48,-18,-19,-15,-14,-17,]),'APERTUPAR':([13,14,15,],[22,22,24,]),'IGUAL':([18,19,20,],[25,26,27,]),'NUM':([22,24,25,27,40,41,],[30,30,30,30,30,30,]),'CADENA':([24,26,],[34,37,]),'OPRELAC':([29,30,31,32,47,],[40,-11,-12,-13,-14,]),'OPARIT':([29,30,31,32,35,36,38,46,47,],[41,-11,-12,-13,41,41,41,41,41,]),'CIERREPAR':([30,31,32,34,35,46,47,],[-11,-12,-13,43,44,49,-14,]),}
+_lr_action_items = {'INICIO':([0,19,47,],[2,25,-18,]),'$end':([1,14,],[0,-1,]),'ID':([2,9,10,11,20,21,22,24,36,37,38,],[3,16,17,18,28,28,28,28,28,44,45,]),'INT':([3,4,5,6,7,8,15,25,27,28,29,32,33,34,35,39,40,41,43,44,45,46,],[9,9,-2,-4,-5,-6,-3,9,-10,-11,-12,-7,-8,-9,9,-19,-20,-17,-15,-16,-13,-14,]),'STRING':([3,4,5,6,7,8,15,25,27,28,29,32,33,34,35,39,40,41,43,44,45,46,],[10,10,-2,-4,-5,-6,-3,10,-10,-11,-12,-7,-8,-9,10,-19,-20,-17,-15,-16,-13,-14,]),'FLOAT':([3,4,5,6,7,8,15,25,27,28,29,32,33,34,35,39,40,41,43,44,45,46,],[11,11,-2,-4,-5,-6,-3,11,-10,-11,-12,-7,-8,-9,11,-19,-20,-17,-15,-16,-13,-14,]),'IF':([3,4,5,6,7,8,15,25,27,28,29,32,33,34,35,39,40,41,43,44,45,46,],[12,12,-2,-4,-5,-6,-3,12,-10,-11,-12,-7,-8,-9,12,-19,-20,-17,-15,-16,-13,-14,]),'PRINT':([3,4,5,6,7,8,15,25,27,28,29,32,33,34,35,39,40,41,43,44,45,46,],[13,13,-2,-4,-5,-6,-3,13,-10,-11,-12,-7,-8,-9,13,-19,-20,-17,-15,-16,-13,-14,]),'FIN':([4,5,6,7,8,15,27,28,29,32,33,34,35,39,40,41,43,44,45,46,],[14,-2,-4,-5,-6,-3,-10,-11,-12,-7,-8,-9,41,-19,-20,-17,-15,-16,-13,-14,]),'APERTUPAR':([12,13,],[20,21,]),'IGUAL':([16,17,18,],[22,23,24,]),'NUM':([20,21,22,24,36,37,38,],[27,27,27,27,27,43,46,]),'CADENA':([21,23,],[30,33,]),'OPRELAC':([26,27,28,29,43,44,45,46,],[36,-10,-11,-12,-15,-16,-13,-14,]),'CIERREPAR':([27,28,29,30,31,42,43,44,45,46,],[-10,-11,-12,39,40,47,-15,-16,-13,-14,]),'OPARIT':([27,28,],[37,38,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'Programa':([0,],[1,]),'ListaInstrucciones':([3,28,33,],[4,39,42,]),'INSTRUCCION':([3,4,28,33,39,42,],[5,17,5,5,17,17,]),'ASIGNACION':([3,4,28,33,39,42,],[6,6,6,6,6,6,]),'IFINSTR':([3,4,28,33,39,42,],[7,7,7,7,7,7,]),'WHILEINSTR':([3,4,28,33,39,42,],[8,8,8,8,8,8,]),'PRINTINSTR':([3,4,28,33,39,42,],[9,9,9,9,9,9,]),'CONDICION':([13,14,],[21,23,]),'EXPRESION':([22,24,25,27,40,41,],[29,35,36,38,46,47,]),'OPERACION':([22,24,25,27,40,41,],[32,32,32,32,32,32,]),}
+_lr_goto_items = {'Programa':([0,],[1,]),'ListaInstrucciones':([3,25,],[4,35,]),'INSTRUCCION':([3,4,25,35,],[5,15,5,15,]),'ASIGNACION':([3,4,25,35,],[6,6,6,6,]),'IFINSTR':([3,4,25,35,],[7,7,7,7,]),'PRINTINSTR':([3,4,25,35,],[8,8,8,8,]),'CONDICION':([12,],[19,]),'EXPRESION':([20,21,22,24,36,],[26,31,32,34,42,]),'OPERACION':([20,21,22,24,36,],[29,29,29,29,29,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -27,23 +27,24 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> Programa","S'",1,None,None,None),
-  ('Programa -> INICIO ID ListaInstrucciones FIN','Programa',4,'p_programa','Pruebas1.py',64),
-  ('ListaInstrucciones -> INSTRUCCION','ListaInstrucciones',1,'p_ListaInstrucciones','Pruebas1.py',70),
-  ('ListaInstrucciones -> ListaInstrucciones INSTRUCCION','ListaInstrucciones',2,'p_ListaInstrucciones','Pruebas1.py',71),
-  ('INSTRUCCION -> ASIGNACION','INSTRUCCION',1,'p_INSTRUCCION','Pruebas1.py',77),
-  ('INSTRUCCION -> IFINSTR','INSTRUCCION',1,'p_INSTRUCCION','Pruebas1.py',78),
-  ('INSTRUCCION -> WHILEINSTR','INSTRUCCION',1,'p_INSTRUCCION','Pruebas1.py',79),
-  ('INSTRUCCION -> PRINTINSTR','INSTRUCCION',1,'p_INSTRUCCION','Pruebas1.py',80),
-  ('ASIGNACION -> INT ID IGUAL EXPRESION','ASIGNACION',4,'p_ASIGNACION','Pruebas1.py',86),
-  ('ASIGNACION -> STRING ID IGUAL CADENA','ASIGNACION',4,'p_ASIGNACION','Pruebas1.py',87),
-  ('ASIGNACION -> FLOAT ID IGUAL EXPRESION','ASIGNACION',4,'p_ASIGNACION','Pruebas1.py',88),
-  ('EXPRESION -> NUM','EXPRESION',1,'p_EXPRESION','Pruebas1.py',94),
-  ('EXPRESION -> ID','EXPRESION',1,'p_EXPRESION','Pruebas1.py',95),
-  ('EXPRESION -> OPERACION','EXPRESION',1,'p_EXPRESION','Pruebas1.py',96),
-  ('OPERACION -> EXPRESION OPARIT EXPRESION','OPERACION',3,'p_OPERACION','Pruebas1.py',102),
-  ('IFINSTR -> IF CONDICION INICIO ListaInstrucciones FIN','IFINSTR',5,'p_IFINSTR','Pruebas1.py',108),
-  ('CONDICION -> APERTUPAR EXPRESION OPRELAC EXPRESION CIERREPAR','CONDICION',5,'p_CONDICION','Pruebas1.py',114),
-  ('WHILEINSTR -> WHILE CONDICION INICIO ListaInstrucciones FIN','WHILEINSTR',5,'p_WHILEINSTR','Pruebas1.py',120),
-  ('PRINTINSTR -> PRINT APERTUPAR CADENA CIERREPAR','PRINTINSTR',4,'p_PRINTINSTR','Pruebas1.py',126),
-  ('PRINTINSTR -> PRINT APERTUPAR EXPRESION CIERREPAR','PRINTINSTR',4,'p_PRINTINSTR','Pruebas1.py',127),
+  ('Programa -> INICIO ID ListaInstrucciones FIN','Programa',4,'p_programa','Pruebas1.py',63),
+  ('ListaInstrucciones -> INSTRUCCION','ListaInstrucciones',1,'p_ListaInstrucciones','Pruebas1.py',69),
+  ('ListaInstrucciones -> ListaInstrucciones INSTRUCCION','ListaInstrucciones',2,'p_ListaInstrucciones','Pruebas1.py',70),
+  ('INSTRUCCION -> ASIGNACION','INSTRUCCION',1,'p_INSTRUCCION','Pruebas1.py',76),
+  ('INSTRUCCION -> IFINSTR','INSTRUCCION',1,'p_INSTRUCCION','Pruebas1.py',77),
+  ('INSTRUCCION -> PRINTINSTR','INSTRUCCION',1,'p_INSTRUCCION','Pruebas1.py',78),
+  ('ASIGNACION -> INT ID IGUAL EXPRESION','ASIGNACION',4,'p_ASIGNACION','Pruebas1.py',84),
+  ('ASIGNACION -> STRING ID IGUAL CADENA','ASIGNACION',4,'p_ASIGNACION','Pruebas1.py',85),
+  ('ASIGNACION -> FLOAT ID IGUAL EXPRESION','ASIGNACION',4,'p_ASIGNACION','Pruebas1.py',86),
+  ('EXPRESION -> NUM','EXPRESION',1,'p_EXPRESION','Pruebas1.py',92),
+  ('EXPRESION -> ID','EXPRESION',1,'p_EXPRESION','Pruebas1.py',93),
+  ('EXPRESION -> OPERACION','EXPRESION',1,'p_EXPRESION','Pruebas1.py',94),
+  ('OPERACION -> ID OPARIT ID','OPERACION',3,'p_OPERACION','Pruebas1.py',100),
+  ('OPERACION -> ID OPARIT NUM','OPERACION',3,'p_OPERACION','Pruebas1.py',101),
+  ('OPERACION -> NUM OPARIT NUM','OPERACION',3,'p_OPERACION','Pruebas1.py',102),
+  ('OPERACION -> NUM OPARIT ID','OPERACION',3,'p_OPERACION','Pruebas1.py',103),
+  ('IFINSTR -> IF CONDICION INICIO ListaInstrucciones FIN','IFINSTR',5,'p_IFINSTR','Pruebas1.py',111),
+  ('CONDICION -> APERTUPAR EXPRESION OPRELAC EXPRESION CIERREPAR','CONDICION',5,'p_CONDICION','Pruebas1.py',117),
+  ('PRINTINSTR -> PRINT APERTUPAR CADENA CIERREPAR','PRINTINSTR',4,'p_PRINTINSTR','Pruebas1.py',123),
+  ('PRINTINSTR -> PRINT APERTUPAR EXPRESION CIERREPAR','PRINTINSTR',4,'p_PRINTINSTR','Pruebas1.py',124),
 ]

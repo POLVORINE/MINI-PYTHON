@@ -413,6 +413,10 @@ def botonIntermedio():
     intermedio.insert('1.0', ensamblador)
 
 
+def botonCodigoObjeto():
+    print('')
+
+
 def botonrun():
     botonscanner()
     botonparser()

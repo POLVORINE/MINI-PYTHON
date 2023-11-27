@@ -4,6 +4,7 @@ from tkinter import filedialog
 import customtkinter as ctk
 import ply.lex as lex
 import ply.yacc as yacc
+import re
 
 # palabas reservadas
 reserved = {
@@ -139,6 +140,8 @@ lexer = lex.lex()
 # Constructor del Parser
 parser = yacc.yacc()
 
+correcto = True
+
 
 def botonNuevoArchivo():
     codigoFuente.delete(1.0, ctk.END)
@@ -191,7 +194,6 @@ def botonparser():
 
 
 def botonsemantico():
-    correcto = True
     if correcto:
         erroresSemanticos.delete("1.0", "end")
         mensaje = "Programa semanticamente correcto\n"
@@ -202,16 +204,287 @@ def botonsemantico():
         erroresSemanticos.insert("1.0", mensaje)
 
 
+def botonIntermedio():
+    codigoIntermedio.delete("1.0", "end")
+    # SECCIONES
+    secdata = "section.data" + "\n"
+    globalmain = "global main " + "\n"
+    main = "main:" + "\n"
+    # ENSAMBLADOR ES EL STRING QUE GENERAMOS
+    # TIPOS DE DECLARACIONES Y INSTRUCCIONES
+    # GUARDAMOS LINEAS DE CODIGO
+    entero = r'\b(\w+)\s+(\w+)\s*=\s*(-?\d+)\b'
+    cadena = r'\b(\w+)\s+(\w+)\s*=\s*\'([^\']*)\'|\"([^\"]*)\"'
+    imprimir = r'print\s*\(\s*([\'"][^\'"]+[\'"])\s*\)'
+    imprimirvariables = r'print\s*\(\s*([a-zA-Z_]\w*)\s*\)'
+    expresion = r'\b(\w+)\s+(\w+)\s*=\s*([\w.+\-*/]+)'
+    ensamblador = ""
+    programa = codigoFuente.get("1.0", "end-1c")
+    # DIVIDIR EL CODIGO EN LINEAS
+    lines = programa.split('\n')
+    # POR EJEMPLO AQUI CONCATENAMOS LA LINEA DEL SECTION DATA
+    ensamblador += secdata
+    contador = 1
+    # genera la section.data y se genera lineas de codigo
+    for line in lines:
+        # se encontro una DECLARACION  int
+        if re.match(entero, line):
+            match = re.match(entero, line)
+            var_id = match.group(2)
+            v1 = var_id
+            var_value = int(match.group(3))
+            v2 = var_value
+            ensamblador += str(contador)
+            dint = f" {v1} dw  {v2}\n"
+            ensamblador += dint
+            contador = contador + 1
+        # se encontro una expresion
+        elif re.match(expresion, line):
+            match = re.match(expresion, line)
+            variable = match.group(2)
+            v1 = variable
+            ensamblador += str(contador)
+            dexpresion = f" {v1} dd 0;\n"
+            ensamblador += dexpresion
+
+        # se encontro una cadena
+        elif re.match(cadena, line):
+            match = re.match(cadena, line)
+            var_value = str(match.group(3))
+            v1 = contador
+            v2 = var_value
+            ensamblador += str(contador)
+            deprint = f"text{v1} db {v2},0\n"
+            ensamblador += deprint
+            contador = contador + 1
+
+        # se encontro la instruccion imprimir
+        elif re.match(imprimir, line):
+            match = re.match(imprimir, line)
+            texto = match.group(1)
+            v1 = contador
+            v2 = texto
+            ensamblador += str(contador)
+            deprint = f"text{v1} db {v2},0\n"
+            ensamblador += deprint
+            contador = contador + 1
+
+        elif re.match(imprimirvariables, line):
+            print('')
+    # encontramos operadores y operandos
+    operadores = re.compile(r'[+\-*/]')
+    operandos = re.compile(r'\b(\w+|\d+)\b')
+    # creamos donde guardarlos
+    operadores_encontrados = []
+    operandos_encontrados = []
+    ensamblador += "\n"
+    ensamblador += globalmain
+    ensamblador += "\n"
+    ensamblador += main
+    ensamblador += "\n"
+    for line in lines:
+        # solo para evitar errores
+        if re.match(entero, line):
+            print()
+        # impresion
+        elif re.match(imprimir, line):
+            ensamblador += ";imprimir un mensaje" + "\n"
+            v1 = 'mensajero'
+            v2 = 'longitud'
+            ensamblador += str(contador)
+            contador = contador + 1
+            linea = ' mov eax, 4' + "\n"
+            ensamblador += linea
+            ensamblador += str(contador)
+            contador = contador + 1
+            linea = ' mov ebx, 1' + "\n"
+            ensamblador += str(contador)
+            contador = contador + 1
+            ensamblador += linea
+            linea = f' movecx, {v1}' + "\n"
+            ensamblador += str(contador)
+            contador = contador + 1
+            ensamblador += linea
+            linea = f' movedx, {v2}' + "\n"
+            ensamblador += str(contador)
+            contador = contador + 1
+            ensamblador += linea
+            linea = ' int 0x80' + "\n"
+            ensamblador += str(contador)
+            contador = contador + 1
+            ensamblador += linea
+        # analisis y impresion de  expresiones
+        elif re.match(expresion, line):
+            ensamblador += ";analizar una expresion" + "\n"
+            match = re.match(expresion, line)
+            if match:
+                expresion_completa = match.group(3)
+                operadores_encontrados = operadores.findall(expresion_completa)
+                operandos_encontrados = operandos.findall(expresion_completa)
+            for op in operadores_encontrados:
+                if op == '+':
+                    t1 = operandos_encontrados[-1] + operandos_encontrados[-2]
+                    v1 = 'ax'
+                    v2 = operandos_encontrados.pop(-2)
+                    mov = f" mov {v1} {v2}\n"
+                    ensamblador += str(contador)
+                    contador = contador + 1
+                    ensamblador += mov
+                    v1 = 'ax'
+                    v2 = operandos_encontrados.pop(-1)
+                    add = f" add {v1} {v2}\n"
+                    ensamblador += str(contador)
+                    contador = contador + 1
+                    ensamblador += add
+                    v1 = 't1'
+                    v2 = 'ax'
+                    mov = f" mov {v1} {v2}\n"
+                    ensamblador += str(contador)
+                    contador = contador + 1
+                    ensamblador += mov
+                    operandos_encontrados.append(t1)
+                elif op == '-':
+                    t1 = operandos_encontrados[-1] - operandos_encontrados[-2]
+                    v1 = 'ax'
+                    v2 = operandos_encontrados.pop(-2)
+                    mov = f" mov {v1} {v2}\n"
+                    ensamblador += str(contador)
+                    contador = contador + 1
+                    ensamblador += mov
+                    v1 = 'ax'
+                    v2 = operandos_encontrados.pop(-1)
+                    sub = f" sub {v1} {v2}\n"
+                    ensamblador += str(contador)
+                    contador = contador + 1
+                    ensamblador += sub
+                    v1 = 't1'
+                    v2 = 'ax'
+                    mov = f" mov {v1} {v2}\n"
+                    ensamblador += str(contador)
+                    contador = contador + 1
+                    ensamblador += mov
+                    operandos_encontrados.append(t1)
+                elif op == '*':
+                    t1 = operandos_encontrados[-1] * operandos_encontrados[-2]
+                    v1 = 'ax'
+                    v2 = operandos_encontrados.pop(-2)
+                    mov = f" mov {v1} {v2}\n"
+                    ensamblador += str(contador)
+                    contador = contador + 1
+                    ensamblador += mov
+                    v1 = 'ax'
+                    v2 = operandos_encontrados.pop(-1)
+                    mul = f" mul {v1} {v2}\n"
+                    ensamblador += str(contador)
+                    contador = contador + 1
+                    ensamblador += mul
+                    v1 = 't1'
+                    v2 = 'ax'
+                    mov = f" mov {v1} {v2}\n"
+                    ensamblador += str(contador)
+                    contador = contador + 1
+                    ensamblador += mov
+                    operandos_encontrados.append(t1)
+                elif op == '/':
+                    t1 = operandos_encontrados[-1] / operandos_encontrados[-2]
+                    v1 = 'ax'
+                    v2 = operandos_encontrados.pop(-2)
+                    mov = f" mov {v1} {v2}\n"
+                    ensamblador += str(contador)
+                    contador = contador + 1
+                    ensamblador += mov
+                    v1 = 'ax'
+                    v2 = operandos_encontrados.pop(-1)
+                    div = f" div {v1} {v2}\n"
+                    ensamblador += str(contador)
+                    contador = contador + 1
+                    ensamblador += div
+                    v1 = 't1'
+                    v2 = 'ax'
+                    mov = f" mov {v1} {v2}\n"
+                    ensamblador += str(contador)
+                    contador = contador + 1
+                    ensamblador += mov
+                    operandos_encontrados.append(t1)
+
+        elif re.match(imprimirvariables, line):
+            ensamblador += ";imprimir una variable" + "\n"
+            v1 = 'nombre expresion'
+            v2 = 'valor final de la expresion'
+            ensamblador += str(contador)
+            contador = contador + 1
+            linea = ' mov eax, 4' + "\n"
+            ensamblador += linea
+            ensamblador += str(contador)
+            contador = contador + 1
+            linea = ' mov ebx, 1' + "\n"
+            ensamblador += str(contador)
+            contador = contador + 1
+            ensamblador += linea
+            linea = f' movecx, {v1}' + "\n"
+            ensamblador += str(contador)
+            contador = contador + 1
+            ensamblador += linea
+            linea = f' movedx, {v2}' + "\n"
+            ensamblador += str(contador)
+            contador = contador + 1
+            ensamblador += linea
+            linea = ' int 0x80' + "\n"
+            ensamblador += str(contador)
+            contador = contador + 1
+            ensamblador += linea
+
+    print(ensamblador)
+    codigoIntermedio.insert('1.0', ensamblador)
+
+
+def botonCodigoObjeto():
+    codigoObjeto.delete("1.0", "end")
+    Ensamblador = codigoIntermedio.get("1.0", "end-1c")
+    codigo=" "
+
+    registrosTraduccion = {
+    'eax': '000', 'ebx': '001', 'ecx': '010', 'edx': '011',
+    'esi': '110', 'edi': '111', 'ax': '000', 'bx': '001',
+    'cx': '010', 'dx': '011', 'si': '110', 'di': '111',
+    'al': '000', 'bl': '001', 'cl': '010', 'dl': '011',
+    }
+    # MOV registro valor immediato
+    # como se compone un mov
+    mov_regex = re.compile(r'^\s*mov\s+([a-zA-Z0-9]+)\s*,\s*(\d+)\s*$')
+    # ANALIZA EL MOV
+    match = mov_regex.match(Ensamblador)
+    if match:
+        registroDestino = match.group(1).lower()
+        valorInmediato = int(match.group(2))
+
+        # chekea si existe el registro
+        if registroDestino in registrosTraduccion:
+            # Convertir valor inmmediato a binario
+            immediate_binary = bin(valorInmediato & 0xFFFF)[2:].zfill(16)
+
+            # acomodar para la printeada
+            opcode = '1011'  # MOV opcode
+            reg_binary = registrosTraduccion[registroDestino]
+            binary_representation = f'{opcode}{reg_binary}{immediate_binary}'
+            codigo += binary_representation + "\n"
+            codigoObjeto.insert('1.0', codigo)
+
+
+
+
 def botonCorrerPrograma():
     botonscanner()
     botonparser()
+    botonIntermedio()
+    botonCodigoObjeto()
 
 
 # DE AQUI PARA ABAJO ES GRAFICACION
 #   personalizacion
 #       TAMAÑO Y TIPO DE FUENTE DE LA APLICACION
 fuente = ("Helvetica", 16)
-fuentetexto = ("Helvetica", 32)
+fuentetexto = ("Helvetica", 16)
 nomcomp = "COMPILER"
 nomgramatica = "MINI PYTHON"
 #       COLORES DE LA INTERFAZ
@@ -231,7 +504,7 @@ ventana.geometry(f"{screen_width}x{screen_height}")
 # Configurar la geometría DEL GRID
 ventana.grid_rowconfigure(0, weight=1)
 ventana.grid_rowconfigure(1, weight=1)
-ventana.grid_rowconfigure(2, weight=20)
+ventana.grid_rowconfigure(2, weight=2)
 ventana.grid_rowconfigure(3, weight=1)
 ventana.grid_rowconfigure(4, weight=1)
 ventana.grid_rowconfigure(5, weight=1)
@@ -284,25 +557,25 @@ LabelCF.grid_propagate(False)
 LabelCI = ctk.CTkLabel(ventana, text="Codigo Intermedio ", bg_color=colorEncabezados, font=fuente)
 LabelCI.grid(row=1, column=4, sticky='nsew')
 LabelCI.grid_propagate(False)
-botonCI = ctk.CTkButton(ventana, fg_color=colorBotones, text=' Generar ', font=fuente)
+botonCI = ctk.CTkButton(ventana, fg_color=colorBotones, text=' Generar ', font=fuente, command=botonIntermedio)
 botonCI.grid(row=1, column=5, sticky='nsew')
 botonCI.grid_propagate(False)
 LabelCO = ctk.CTkLabel(ventana, text="Codigo Objeto ", bg_color=colorEncabezados, font=fuente)
 LabelCO.grid(row=1, column=7, sticky='nsew')
 LabelCO.grid_propagate(False)
-botonCO = ctk.CTkButton(ventana, fg_color=colorBotones, text=' Generar ', font=fuente)
+botonCO = ctk.CTkButton(ventana, fg_color=colorBotones, text=' Generar ', font=fuente, command=botonCodigoObjeto)
 botonCO.grid(row=1, column=8, sticky='nsew')
 botonCO.grid_propagate(False)
 # ROW 2
 codigoFuente = ctk.CTkTextbox(ventana, fg_color=colorFondoTexto, font=fuentetexto)
 codigoFuente.grid(row=2, column=1, columnspan=2, sticky='nsew')
-codigoFuente.grid_propagate(False)
+codigoFuente.grid_propagate(True)
 codigoIntermedio = ctk.CTkTextbox(ventana, fg_color=colorFondoTexto, font=fuentetexto)
 codigoIntermedio.grid(row=2, column=4, columnspan=2, sticky='nsew')
-codigoIntermedio.grid_propagate(False)
+codigoIntermedio.grid_propagate(True)
 codigoObjeto = ctk.CTkTextbox(ventana, fg_color=colorFondoTexto, font=fuentetexto)
 codigoObjeto.grid(row=2, column=7, columnspan=2, sticky='nsew')
-codigoObjeto.grid_propagate(False)
+codigoObjeto.grid_propagate(True)
 # ROW 3
 LabelTT = ctk.CTkLabel(ventana, text="Tabla De Tokens ", bg_color=colorEncabezados, font=fuente)
 LabelTT.grid(row=3, column=1, sticky='nsew')
